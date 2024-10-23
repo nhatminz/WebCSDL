@@ -1,5 +1,7 @@
-package com.example.webcsdl.Model;
+package com.example.webcsdl.Service;
 
+import com.example.webcsdl.Entity.MyAppUser;
+import com.example.webcsdl.Repository.MyAppUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

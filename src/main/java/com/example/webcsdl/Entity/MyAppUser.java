@@ -1,4 +1,4 @@
-package com.example.webcsdl.Model;
+package com.example.webcsdl.Entity;
 
 import jakarta.persistence.*;
 

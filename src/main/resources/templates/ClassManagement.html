@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);
+    }
+
+    header {
+      background-color: #383199;
+      color: white;
+      padding: 15px 10px;
+      text-align: center;
+    }
+
+    header h1 {
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    nav a:hover {
+      background-color: transparent;
+      color: royalblue;
+    }
+
+    main {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      background-color: #f9f9f9;
+    }
+
+    .card h3 {
+      margin: 0 0 10px 0;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #45a049;
+    }
+
+    .class-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .class-item {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .class-item:hover {
+      background-color: #e9e9e9;
+    }
+
+    .student-input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .student-input input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .class-details {
+      display: none; /* Hide class details initially */
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .class-details h4 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1 onclick="window.location.href='Dashboard.html'">School Management System</h1>
+</header>
+<main>
+  <div class="card">
+    <h3>Tìm kiếm lớp học</h3>
+    <div class="search-bar">
+      <input type="text" id="class-search" placeholder="Nhập tên lớp học...">
+      <button onclick="searchClass()">Tìm kiếm</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Danh sách lớp học</h3>
+    <div class="class-list" id="class-list">
+      <div class="class-item" onclick="showClassDetails('Lớp A')">Lớp A</div>
+      <div class="class-item" onclick="showClassDetails('Lớp B')">Lớp B</div>
+      <div class="class-item" onclick="showClassDetails('Lớp C')">Lớp C</div>
+      <!-- Add more classes as needed -->
+    </div>
+    <div class="class-details" id="class-details">
+      <h4>Thông tin lớp</h4>
+      <p id="class-info"></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Thêm/Sửa sinh viên</h3>
+    <div class="student-input">
+      <input type="text" id="student-name" placeholder="Nhập tên sinh viên">
+      <input type="text" id="student-id" placeholder="Nhập mã sinh viên">
+      <button onclick="addStudent()">Thêm sinh viên</button>
+      <button onclick="removeStudent()">Xóa sinh viên</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  let currentClass = ''; // Biến để theo dõi lớp hiện tại
+
+  function showClassDetails(className) {
+    const classInfo = document.getElementById('class-info');
+    const classDetailsCard = document.getElementById('class-details');
+
+    // Nếu lớp được nhấp vào là lớp hiện tại, ẩn thông tin
+    if (currentClass === className) {
+      classDetailsCard.style.display = 'none';
+      currentClass = ''; // Đặt lớp hiện tại thành rỗng
+    } else {
+      // Cập nhật thông tin lớp
+      classInfo.innerHTML = `
+        <strong>${className}</strong><br>
+        Khóa học: 2024<br>
+        Danh sách sinh viên: <br>
+        - Sinh viên 1<br>
+        - Sinh viên 2<br>
+        - Sinh viên 3<br>
+        Cố vấn học tập: Giáo viên A
+      `;
+      classDetailsCard.style.display = 'block'; // Hiển thị thông tin lớp
+      currentClass = className; // Cập nhật lớp hiện tại
+    }
+  }
+
+  function searchClass() {
+    const searchValue = document.getElementById('class-search').value.toLowerCase();
+    const classItems = document.querySelectorAll('.class-item');
+    classItems.forEach(item => {
+      if (item.innerText.toLowerCase().includes(searchValue)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function addStudent() {
+    const studentName = document.getElementById('student-name').value;
+    const studentId = document.getElementById('student-id').value;
+
+    // Logic to add student (e.g., to the database or an array)
+    alert(`Thêm sinh viên: ${studentName}, Mã sinh viên: ${studentId}`);
+
+    // Clear input fields
+    document.getElementById('student-name').value = '';
+    document.getElementById('student-id').value = '';
+  }
+
+  function removeStudent() {
+    const studentId = document.getElementById('student-id').value;
+
+    // Logic to remove student (e.g., from the database or an array)
+    alert(`Xóa sinh viên với mã: ${studentId}`);
+
+    // Clear input fields
+    document.getElementById('student-id').value = '';
+  }
+</script>
+</body>
+</html>

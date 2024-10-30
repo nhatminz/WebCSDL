@@ -25,7 +25,7 @@ public class ContentController {
         return "signup";
     }
 
-    @GetMapping("/Dashboard")
+    @GetMapping("/home")
     public String home() {
         return "Dashboard";
     }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);
+        }
+
+        header {
+            background-color: #383199;
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            background-color: #f9f9f9;
+        }
+
+        .card a {
+            color: #383199;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            color: #333;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>School Management System</h1>
+</header>
+
+<main>
+    <div class="card">
+        <h3>Quản lí giảng viên</h3>
+        <a href="TeachersManagement.html">Xem chi tiết</a>
+    </div>
+    <div class="card">
+        <h3>Quản lí lớp</h3>
+        <a href="ClassManagement.html">Xem chi tiết</a>
+    </div>
+    <div class="card">
+        <h3>Quản lí sinh viên</h3>
+        <a href="StudentsManagement.html">Xem chi tiết</a>
+    </div>
+    <div class="card">
+        <h3>Quản lí khóa học</h3>
+        <a href="CoursesManagement.html">Xem chi tiết</a>
+    </div>
+</main>
+</body>
+</html>

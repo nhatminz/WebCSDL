@@ -9,4 +9,25 @@ public class DashboardController {
     public String home() {
         return "Dashboard";
     }
+
+    @GetMapping("/Teachers")
+    public String showTeachersManagement() {
+        return "Teachers";
+    }
+
+    @GetMapping("/Students")
+    public String showStudentManagement() {
+        return "Students";
+    }
+
+    @GetMapping("/Class")
+    public String showClassManagement() {
+        return "Class";
+    }
+
+    @GetMapping("/Courses")
+    public String showCourseManagement() {
+        return "Courses";
+    }
 }
+

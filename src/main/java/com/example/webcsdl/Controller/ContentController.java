@@ -16,8 +16,8 @@ public class ContentController {
         return "signup";
     }
 
-    @GetMapping("/index")
-    public String home() {
-        return "index";
-    }
+//    @GetMapping("/Dashboard")
+//    public String home() {
+//        return "Dashboard";
+//    }
 }

@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .formLogin(httpForm -> {
                     httpForm
                             .loginPage("/req/login").permitAll();
-                    httpForm.defaultSuccessUrl("/index");
+                    httpForm.defaultSuccessUrl("/Dashboard");
                 })
 
                 .authorizeHttpRequests(registry -> {

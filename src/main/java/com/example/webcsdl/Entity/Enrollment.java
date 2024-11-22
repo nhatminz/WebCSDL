@@ -1,27 +1,39 @@
 package com.example.webcsdl.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "enrollments")
 public class Enrollment {
 
+    // Getter và Setter cho id
     @EmbeddedId
     private EnrollmentId id; // Composite key (EmbeddedId)
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Getter và Setter cho student
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("studentId")  // Ánh xạ với studentId trong EnrollmentId
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Getter và Setter cho course
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("courseId")   // Ánh xạ với courseId trong EnrollmentId
     @JoinColumn(name = "course_id", insertable = false, updatable = false)
     private Course course;
 
+    // Getter và Setter cho enrollmentDate
     @Column(name = "enrollment_date")
     private Date enrollmentDate;
+
+    @Column(name = "grade")
+    private Double grade;
 
     // Constructor mặc định
     public Enrollment() {}
@@ -33,39 +45,4 @@ public class Enrollment {
         this.enrollmentDate = enrollmentDate;
     }
 
-    // Getter và Setter cho id
-    public EnrollmentId getId() {
-        return id;
-    }
-
-    public void setId(EnrollmentId id) {
-        this.id = id;
-    }
-
-    // Getter và Setter cho student
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    // Getter và Setter cho course
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    // Getter và Setter cho enrollmentDate
-    public Date getEnrollmentDate() {
-        return enrollmentDate;
-    }
-
-    public void setEnrollmentDate(Date enrollmentDate) {
-        this.enrollmentDate = enrollmentDate;
-    }
 }

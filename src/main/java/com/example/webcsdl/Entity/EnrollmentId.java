@@ -1,36 +1,26 @@
 package com.example.webcsdl.Entity;
 
+import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
-
+@Setter
+@Getter
+@Embeddable
 public class EnrollmentId implements Serializable {
 
-    private Integer studentId;
-    private Integer courseId;
+    // Getter và Setter cho studentId
+    private Long studentId;
+    // Getter và Setter cho courseId
+    private Long courseId;
 
     // Constructor mặc định
     public EnrollmentId() {}
 
-    public EnrollmentId(Integer studentId, Integer courseId) {
+    public EnrollmentId(Long studentId, Long courseId) {
         this.studentId = studentId;
-        this.courseId = courseId;
-    }
-
-    // Getter và Setter cho studentId
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    // Getter và Setter cho courseId
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 

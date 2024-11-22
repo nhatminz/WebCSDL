@@ -3,12 +3,9 @@ package com.example.webcsdl.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "teachers")
+public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,29 +16,15 @@ public class Student {
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-
     @Column(name = "email", length = 100)
     private String email;
 
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "address", length = 255)
-    private String address;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_id", referencedColumnName = "id")
-    private SchoolClass studentClass;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id", referencedColumnName = "id")
-    private Major major;
-
-    @Column(name = "gpa", precision = 3, scale = 2)
-    private BigDecimal gpa;
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
     // Getter and Setter methods
     public Integer getId() {
@@ -68,14 +51,6 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -92,35 +67,11 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public SchoolClass getStudentClass() {
-        return studentClass;
-    }
-
-    public void setStudentClass(SchoolClass studentClass) {
-        this.studentClass = studentClass;
-    }
-
-    public Major getMajor() {
-        return major;
-    }
-
-    public void setMajor(Major major) {
-        this.major = major;
-    }
-
-    public BigDecimal getGpa() {
-        return gpa;
-    }
-
-    public void setGpa(BigDecimal gpa) {
-        this.gpa = gpa;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

@@ -13,7 +13,6 @@ import java.sql.Time;
 public class CourseSchedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

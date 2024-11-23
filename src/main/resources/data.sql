@@ -1,106 +1,70 @@
+-- Bảng departments
+INSERT INTO departments (department_name, location)
+VALUES
+    ('Computer Science', 'Building A'),
+    ('Mathematics', 'Building B'),
+    ('Physics', 'Building C');
 
+-- Bảng classes
+INSERT INTO classes (class_name, class_description)
+VALUES
+    ('CS1', 'Introduction to Computer Science'),
+    ('CS2', 'Advanced Computer Science'),
+    ('MATH1', 'Basic Mathematics');
 
-CREATE TABLE departments (
-                             department_name VARCHAR(100),
-                             location VARCHAR(100),
-                             id BIGINT AUTO_INCREMENT primary key
-);
+-- Bảng majors
+INSERT INTO majors (major_name, description, department_id)
+VALUES
+    ('Computer Science', 'Focus on software development and algorithms', 1),
+    ('Mathematics', 'Advanced topics in algebra and calculus', 2),
+    ('Physics', 'Explore the laws of the universe', 3);
 
-CREATE TABLE classes (
-                         class_name VARCHAR(50),  -- Tên lớp (VD: CS1, CS2)
-                         class_description VARCHAR(255),
-                         id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
+-- Bảng teachers
+INSERT INTO teachers (first_name, last_name, email, phone_number, department_id)
+VALUES
+    ('Alice', 'Johnson', 'alice.johnson@example.com', '123456789', 1),
+    ('Bob', 'Smith', 'bob.smith@example.com', '987654321', 2),
+    ('Charlie', 'Brown', 'charlie.brown@example.com', '567890123', 3);
 
-CREATE TABLE majors (
-                        major_name VARCHAR(100),  -- Tên ngành (VD: Computer Science)
-                        description TEXT,
-                        department_id BIGINT,
-                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                        constraint fk_department foreign key (department_id) references departments(id)
-);
+-- Bảng courses
+INSERT INTO courses (course_name, course_code, credits, major_id, teacher_id)
+VALUES
+    ('Programming 101', 'CS101', 4, 1, 1),
+    ('Data Structures', 'CS201', 3, 1, 1),
+    ('Calculus', 'MATH101', 4, 2, 2),
+    ('Quantum Mechanics', 'PHYS101', 3, 3, 3);
 
--- tao bang teachers
-CREATE TABLE teachers (
-                          first_name VARCHAR(50),
-                          last_name VARCHAR(50),
-                          email VARCHAR(100),
-                          phone_number VARCHAR(20),
-                          department_id BIGINT,
-                          CONSTRAINT fk_department2 FOREIGN KEY (department_id) REFERENCES departments(id),
-                          id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
+-- Bảng students
+INSERT INTO students (first_name, last_name, date_of_birth, email, phone_number, address, class_id, major_id, gpa)
+VALUES
+    ('John', 'Doe', '2001-05-15', 'john.doe@example.com', '123456789', '123 Main St', 1, 1, 3.8),
+    ('Jane', 'Smith', '2000-12-10', 'jane.smith@example.com', '987654321', '456 Elm St', 2, 1, 3.9),
+    ('Mark', 'Lee', '2002-07-22', 'mark.lee@example.com', '567890123', '789 Pine St', 3, 2, 3.5);
 
+-- Bảng classrooms
+INSERT INTO classrooms (room_number, building, capacity)
+VALUES
+    ('A101', 'Building A', 50),
+    ('B201', 'Building B', 30),
+    ('C301', 'Building C', 40);
 
--- tao bang courses
-CREATE TABLE courses (
-                         course_name VARCHAR(100),
-                         course_code VARCHAR(20),  -- Mã lớp học (VD: CS1, CS2)
-                         credits INT,
-                         major_id BIGINT,  -- Khóa học thuộc ngành nào
-                         teacher_id BIGINT,
-                         CONSTRAINT fk_major_course FOREIGN KEY (major_id) REFERENCES majors(id),
-                         CONSTRAINT fk_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-                         id INT PRIMARY KEY AUTO_INCREMENT
-);
+-- Bảng scholarships
+INSERT INTO scholarships (scholarship_name, amount, student_id)
+VALUES
+    ('Excellence Scholarship', 1000.00, 1),
+    ('Merit Scholarship', 750.00, 2);
 
-CREATE TABLE students (
-                          first_name VARCHAR(50),
-                          last_name VARCHAR(50),
-                          date_of_birth DATE,
-                          email VARCHAR(100),
-                          phone_number VARCHAR(20),
-                          address VARCHAR(255),
-                          class_id BIGINT,  -- Liên kết với bảng class
-                          major_id BIGINT,  -- Liên kết với ngành học
-                          gpa DECIMAL(3, 2),  -- Thang điểm 4
-                          CONSTRAINT fk_class FOREIGN KEY (class_id) REFERENCES classes(id),
-                          CONSTRAINT fk_major FOREIGN KEY (major_id) REFERENCES majors(id),
-                          id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
+-- Bảng enrollments
+INSERT INTO enrollments (student_id, course_id, enrollment_date, grade)
+VALUES
+    (1, 1, '2024-01-15', 3.7),
+    (1, 2, '2024-01-15', 3.8),
+    (2, 3, '2024-01-20', 3.9),
+    (3, 4, '2024-02-01', 3.5);
 
-
-
-
-
-
-
-CREATE TABLE classrooms (
-                            room_number VARCHAR(10),
-                            building VARCHAR(100),
-                            capacity INT,
-                            id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
-
-
--- tao bang scholarships
-CREATE TABLE scholarships (
-                              scholarship_name VARCHAR(100),
-                              amount DECIMAL(10, 2),
-                              student_id BIGINT,
-                              CONSTRAINT fk_scholarship_student FOREIGN KEY (student_id) REFERENCES students(id),
-                              id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
-
-CREATE TABLE enrollments (
-                             student_id BIGINT,
-                             course_id BIGINT,
-                             enrollment_date DATE,
-                             grade DECIMAL(3, 2),  -- Điểm số cho khóa học (thang điểm 4)
-                             PRIMARY KEY (student_id, course_id),
-                             CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(id),
-                             CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-
--- tao bang course_schedule
-CREATE TABLE course_schedule (
-                                 course_id BIGINT,
-                                 classroom_id BIGINT,
-                                 day_of_week VARCHAR(20),
-                                 start_time TIME,
-                                 end_time TIME,
-                                 CONSTRAINT fk_schedule_course FOREIGN KEY (course_id) REFERENCES courses(id),
-                                 CONSTRAINT fk_schedule_classroom FOREIGN KEY (classroom_id) REFERENCES classrooms(id),
-                                 id BIGINT PRIMARY KEY AUTO_INCREMENT
-);
-
+-- Bảng course_schedule
+INSERT INTO course_schedule (course_id, classroom_id, day_of_week, start_time, end_time)
+VALUES
+    (1, 1, 'Monday', '08:00:00', '10:00:00'),
+    (2, 2, 'Wednesday', '10:00:00', '12:00:00'),
+    (3, 3, 'Friday', '14:00:00', '16:00:00');

@@ -13,7 +13,6 @@ public class SchoolClass {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter

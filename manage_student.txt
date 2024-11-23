@@ -3,20 +3,20 @@
 CREATE TABLE departments (
                              department_name VARCHAR(100),
                              location VARCHAR(100),
-                             id BIGINT AUTO_INCREMENT primary key
+                             id BIGINT primary key
 );
 
 CREATE TABLE classes (
                          class_name VARCHAR(50),  -- Tên lớp (VD: CS1, CS2)
                          class_description VARCHAR(255),
-                         id BIGINT PRIMARY KEY AUTO_INCREMENT
+                         id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE majors (
                         major_name VARCHAR(100),  -- Tên ngành (VD: Computer Science)
                         description TEXT,
                         department_id BIGINT,
-                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                        id BIGINT PRIMARY KEY,
                         constraint fk_department foreign key (department_id) references departments(id)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE teachers (
                           phone_number VARCHAR(20),
                           department_id BIGINT,
                           CONSTRAINT fk_department2 FOREIGN KEY (department_id) REFERENCES departments(id),
-                          id BIGINT PRIMARY KEY AUTO_INCREMENT
+                          id BIGINT PRIMARY KEY
 );
 
 
@@ -41,7 +41,7 @@ CREATE TABLE courses (
                          teacher_id BIGINT,
                          CONSTRAINT fk_major_course FOREIGN KEY (major_id) REFERENCES majors(id),
                          CONSTRAINT fk_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-                         id INT PRIMARY KEY AUTO_INCREMENT
+                         id INT PRIMARY KEY
 );
 
 CREATE TABLE students (
@@ -56,7 +56,7 @@ CREATE TABLE students (
                           gpa DECIMAL(3, 2),  -- Thang điểm 4
                           CONSTRAINT fk_class FOREIGN KEY (class_id) REFERENCES classes(id),
                           CONSTRAINT fk_major FOREIGN KEY (major_id) REFERENCES majors(id),
-                          id BIGINT PRIMARY KEY AUTO_INCREMENT
+                          id BIGINT PRIMARY KEY
 );
 
 
@@ -69,7 +69,7 @@ CREATE TABLE classrooms (
                             room_number VARCHAR(10),
                             building VARCHAR(100),
                             capacity INT,
-                            id BIGINT PRIMARY KEY AUTO_INCREMENT
+                            id BIGINT PRIMARY KEY
 );
 
 
@@ -79,7 +79,7 @@ CREATE TABLE scholarships (
                               amount DECIMAL(10, 2),
                               student_id BIGINT,
                               CONSTRAINT fk_scholarship_student FOREIGN KEY (student_id) REFERENCES students(id),
-                              id BIGINT PRIMARY KEY AUTO_INCREMENT
+                              id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE enrollments (
@@ -101,6 +101,6 @@ CREATE TABLE course_schedule (
                                  end_time TIME,
                                  CONSTRAINT fk_schedule_course FOREIGN KEY (course_id) REFERENCES courses(id),
                                  CONSTRAINT fk_schedule_classroom FOREIGN KEY (classroom_id) REFERENCES classrooms(id),
-                                 id BIGINT PRIMARY KEY AUTO_INCREMENT
+                                 id BIGINT PRIMARY KEY
 );
 

@@ -40,11 +40,21 @@ public class Teacher {
 
     @Setter
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Course> courses = new ArrayList<>();
 
+    //Helper methods
+    public void addCourse(Course course) {
+        courses.add(course);
+        course.setTeacher(this);
+    }
+
+    public void removeCourse(Course course) {
+        courses.remove(course);
+        course.setTeacher(null);
+    }
 }

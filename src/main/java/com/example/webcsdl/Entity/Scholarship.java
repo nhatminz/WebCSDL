@@ -21,7 +21,7 @@ public class Scholarship {
     @Column(name = "amount", precision = 10, scale = 2)
     private BigDecimal amount;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 

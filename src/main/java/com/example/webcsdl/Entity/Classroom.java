@@ -32,9 +32,18 @@ public class Classroom {
     @Column(name = "capacity")
     private Integer capacity;
 
-    @OneToMany(mappedBy = "classroom", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "classroom", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CourseSchedule> schedules = new ArrayList<>();
 
-    // Getters and Setters
+    // Helper methods
+    public void addSchedule(CourseSchedule schedule) {
+        this.schedules.add(schedule);
+        schedule.setClassroom(this);
+    }
+
+    public void removeSchedule(CourseSchedule schedule) {
+        this.schedules.remove(schedule);
+        schedule.setClassroom(null);
+    }
 
 }

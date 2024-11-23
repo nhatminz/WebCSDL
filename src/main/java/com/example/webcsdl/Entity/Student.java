@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "students")
 public class Student {
-    // Getter and Setter methods
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,21 +39,42 @@ public class Student {
     @Column(name = "address", length = 255)
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id", referencedColumnName = "id")
     private SchoolClass studentClass;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id", referencedColumnName = "id")
     private Major major;
 
     @Column(name = "gpa", precision = 3, scale = 2)
     private BigDecimal gpa;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Enrollment> enrollments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Scholarship> scholarships = new ArrayList<>();
 
+
+    //Helper methods
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+        enrollment.setStudent(this);
+    }
+
+    public void addScholarship(Scholarship scholarship) {
+        scholarships.add(scholarship);
+        scholarship.setStudent(this);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
+        enrollment.setStudent(null);
+    }
+
+    public void removeScholarship(Scholarship scholarship) {
+        scholarships.remove(scholarship);
+        scholarship.setStudent(null);
+    }
 }

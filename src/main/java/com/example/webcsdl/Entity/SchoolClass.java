@@ -26,9 +26,18 @@ public class SchoolClass {
     @Column(name = "class_description", length = 255)
     private String classDescription;
 
-    @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "studentClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Student> students = new ArrayList<>();
 
-    // Getter and Setter methods
+    // Hepler methods
+    public void addStudent(Student student) {
+        students.add(student);
+        student.setStudentClass(this);
+    }
+
+    public void removeStudent(Student student) {
+        students.remove(student);
+        student.setStudentClass(null);
+    }
 
 }

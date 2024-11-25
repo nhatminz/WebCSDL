@@ -22,7 +22,7 @@ public class DashboardController {
 
     @GetMapping("/Class")
     public String showClassManagement() {
-        return "Class";
+        return "Classes";
     }
 
     @GetMapping("/Courses")

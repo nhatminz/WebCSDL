@@ -22,7 +22,7 @@
 
         /* Sidebar */
         .sidebar {
-            width: 200px;
+            width: 220px;
             background-color: #34495e;
             color: white;
             padding: 20px;
@@ -293,6 +293,7 @@
     </div>
 </div>
 
+<!-- Sidebar -->
 <div class="sidebar">
     <a href="Dashboard" class="menu-item">
         <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -329,7 +330,6 @@
     </a>
 </div>
 
-
 <!-- Main Content -->
 <div class="main-content">
     <!-- Add Teacher Button -->
@@ -352,23 +352,20 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Department</th>
-                <th>Courses</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <!-- Example Row -->
-            <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john.doe@example.com</td>
-                <td>123456789</td>
-                <td>Mathematics</td>
-                <td>Algebra</td>
+            <tr th:each="teacher : ${teachers}">
+                <td th:text="${teacher.id}"></td>
+                <td th:text="${teacher.firstName}"></td>
+                <td th:text="${teacher.lastName}"></td>
+                <td th:text="${teacher.email}"></td>
+                <td th:text="${teacher.phoneNumber}">
+                <td th:text="${teacher.department.getDepartmentName()}">
                 <td class="action-buttons">
-                    <button class="update-btn" onclick="updateTeacher(1)">Update</button>
-                    <button class="delete-btn" onclick="deleteTeacher(1)">Delete</button>
+                    <button class="update-btn" onclick="updateStudent(1)">Update</button>
+                    <button class="delete-btn" onclick="deleteStudent(1)">Delete</button>
                 </td>
             </tr>
             <!-- Dynamic rows will go here -->
@@ -380,16 +377,33 @@
     <div class="form-container" id="addTeacherForm">
         <h2></h2>
         <h3>Add Teacher</h3>
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="email" id="email" placeholder="Email">
-        <input type="text" id="phoneNumber" placeholder="Phone Number">
-        <input type="text" id="department" placeholder="Department">
-        <input type="text" id="courses" placeholder="Courses">
-        <div class="action-buttons">
-            <button onclick="submitTeacher()">Submit</button>
-            <button onclick="backToTable()">Back</button>
-        </div>
+        <form th:action="@{/Teachers/add}" th:object="${teacher}" method="POST">
+            <label>ID:</label>
+            <input type="number" th:field="*{id}" required><br>
+
+            <label>First Name:</label>
+            <input type="text" th:field="*{firstName}" required><br>
+
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}" required><br>
+
+            <label>Email:</label>
+            <input type="text" th:field="*{email}" required><br>
+
+            <label>Phone Number:</label>
+            <input type="text" th:field="*{phoneNumber}" required><br>
+
+            <label>Department:</label>
+            <select th:field="*{department}" required>
+                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep.departmentName}"></option>
+            </select><br>
+            <div class="action-buttons">
+                <button onclick="submitStudent()">Submit</button>
+                <button onclick="backToTable()">Back</button>
+            </div>
+            <!--<button type="submit">Save</button>-->
+            <!--<button onclick="backToTable()">Back</button>-->
+        </form>
     </div>
 </div>
 <script>

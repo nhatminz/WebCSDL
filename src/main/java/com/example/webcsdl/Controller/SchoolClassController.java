@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SchoolClassController {
     @Autowired
     private SchoolClassServiceImpl schoolClassServiceImpl;
-    @GetMapping("/SchoolClasses")
+    @GetMapping("/Classes")
     public String showStudentManagement(Model model) {
         model.addAttribute("schoolClasses", schoolClassServiceImpl.getAllSchoolClass());
         model.addAttribute("schoolClass", new SchoolClass());
-        return "SchoolClass";
+        return "Classes";
     }
 }

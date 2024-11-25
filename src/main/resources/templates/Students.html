@@ -430,6 +430,16 @@
 </div>
 
 <script>
+    // Dropdown toggle function
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Function to handle logout
+    function logout() {
+        window.location.href = 'logout';
+    }
     function showAddStudentForm() {
         document.getElementById('addStudentForm').style.display = 'block';
         document.getElementById('studentsList').style.display = 'none';
@@ -438,11 +448,6 @@
     function backToTable() {
         document.getElementById('addStudentForm').style.display = 'none';
         document.getElementById('studentsList').style.display = 'block';
-    }
-
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 </script>
 </body>

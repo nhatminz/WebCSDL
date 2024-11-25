@@ -363,15 +363,16 @@
         document.getElementById('addClassForm').style.display = 'flex';
         document.getElementById('classesList').style.display = 'none';
     }
+    // Dropdown toggle function
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdown-menu');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
+
+    // Function to handle logout
     function logout() {
-        alert('Logging out...');
-        // You can implement logout logic here
+        window.location.href = 'logout';
     }
-    // Function to go back to classes list
     function goBack() {
         document.getElementById('addClassForm').style.display = 'none';
         document.getElementById('classesList').style.display = 'block';

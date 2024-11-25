@@ -418,12 +418,15 @@
     document.getElementById('addCourseScheduleForm').style.display = 'none';
     document.getElementById('courseSchedulesList').style.display = 'block';
   }
-  function logout() {
-    alert('Logging out...');
-  }
+  // Dropdown toggle function
   function toggleDropdown() {
     const dropdown = document.getElementById('dropdown-menu');
     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Function to handle logout
+  function logout() {
+    window.location.href = 'logout';
   }
 </script>
 </body>

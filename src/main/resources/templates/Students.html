@@ -245,22 +245,22 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <a href="Dashboard.html" class="menu-item">
+    <a href="Dashboard" class="menu-item">
         <i class="fas fa-tachometer-alt"></i> Dashboard
     </a>
-    <a href="Courses.html" class="menu-item">
+    <a href="Courses" class="menu-item">
         <i class="fas fa-book"></i> Courses
     </a>
-    <a href="Students.html" class="menu-item">
+    <a href="Students" class="menu-item">
         <i class="fas fa-user-graduate"></i> Students
     </a>
-    <a href="Teachers.html" class="menu-item">
+    <a href="Teachers" class="menu-item">
         <i class="fas fa-user-tie"></i> Teachers
     </a>
-    <a href="Classes.html" class="menu-item">
+    <a href="Classes" class="menu-item">
         <i class="fas fa-building"></i> Classes
     </a>
-    <a href="Settings.html" class="menu-item">
+    <a href="Settings" class="menu-item">
         <i class="fas fa-cogs"></i> Settings
     </a>
 </div>
@@ -274,18 +274,45 @@
     <!-- Add/Edit Student Form -->
     <div class="form-container" id="addStudentForm">
         <h3>Add Student</h3>
-        <input type="text" id="firstName" placeholder="First Name" required>
-        <input type="text" id="lastName" placeholder="Last Name" required>
-        <input type="date" id="dateOfBirth" placeholder="Date of Birth" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="text" id="phoneNumber" placeholder="Phone Number" required>
-        <input type="text" id="address" placeholder="Address" required>
-        <input type="text" id="studentClass" placeholder="Class" required>
-        <input type="text" id="major" placeholder="Major" required>
-        <input type="number" id="gpa" placeholder="GPA" step="0.1" required>
+        <form th:action="@{/Students/add}" th:object="${student}" method="POST">
+            <label>ID:</label>
+            <input type="text" th:field="*{id}" required><br>
 
-        <button onclick="submitStudent()">Submit</button>
-        <button onclick="backToTable()">Back</button>
+            <label>First Name:</label>
+            <input type="text" th:field="*{firstName}" required><br>
+
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}" required><br>
+
+            <label>Date of Birth:</label>
+            <input type="date" th:field="*{dateOfBirth}" required><br>
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" required><br>
+
+            <label>Phone Number:</label>
+            <input type="text" th:field="*{phoneNumber}" required><br>
+
+            <label>Address:</label>
+            <input type="text" th:field="*{address}" required><br>
+
+            <label>Class:</label>
+            <select th:field="*{studentClass}" required>
+                <option th:each="cls : ${classes}" th:value="${cls}" th:text="${cls.className}"></option>
+            </select><br>
+
+            <label>Major:</label>
+            <select th:field="*{major}" required>
+                <option th:each="maj : ${majors}" th:value="${maj}" th:text="${maj.majorName}"></option>
+            </select><br>
+
+            <label>GPA:</label>
+            <input type="number" th:field="*{gpa}" step="0.01" required><br>
+
+            <button type="submit">Save</button>
+            <!--<button onclick="backToTable()">Back</button>-->
+        </form>
+        <a href="/Students">Refresh</a>
     </div>
 
     <!-- Search Bar -->
@@ -311,7 +338,18 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Table rows will be added dynamically here -->
+        <!-- Duyệt qua danh sách sinh viên -->
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.firstName}"></td>
+            <td th:text="${student.lastName}"></td>
+            <td th:text="${student.dateOfBirth}"></td>
+            <td th:text="${student.email}"></td>
+            <td th:text="${student.phoneNumber}"></td>
+            <td th:text="${student.address}"></td>
+            <td th:text="${student.studentClass.getClassName()}"></td>
+            <td th:text="${student.major.getMajorName()}"></td>
+            <td th:text="${student.gpa}"></td>
         </tbody>
     </table>
 </div>

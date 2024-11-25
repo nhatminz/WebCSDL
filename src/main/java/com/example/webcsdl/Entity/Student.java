@@ -35,7 +35,7 @@ public class Student {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "address", length = 255)
+    @Column(name = "address", length = 254)
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)

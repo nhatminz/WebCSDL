@@ -326,13 +326,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>A101</td>
-                <td>Main Building</td>
+            <tr th:each="schoolClass : ${schoolClasses}">
+                <td th:text="${schoolClass.id}"></td>
+                <td th:text="${schoolClass.className}"></td>
+                <td th:text="${schoolClass.classDescription}"></td>
                 <td class="action-buttons">
-                    <button class="update-btn">Update</button>
-                    <button class="delete-btn" onclick="deleteClass('A101')">Delete</button>
+                    <button class="update-btn" th:onclick="'updateSchoolClass(' + ${schoolClass.id} + ')'">Update</button>
+                    <button class="delete-btn" th:onclick="'deleteSchoolClass(' + ${schoolClass.id} + ')'">Delete</button>
                 </td>
             </tr>
             </tbody>
@@ -340,15 +340,20 @@
     </div>
 
     <div id="addClassForm" class="form-container">
-        <h3>Add New Class</h3>
-        <input type="text" id="roomNumber" placeholder="Room Number">
-        <input type="text" id="building" placeholder="Building">
-        <input type="number" id="capacity" placeholder="Capacity">
-        <input type="text" id="schedules" placeholder="Schedules">
-        <div class="action-buttons">
-            <button onclick="addClass()">Save</button>
-            <button onclick="goBack()">Back</button>
-        </div>
+        <form th:action="@{SchoolClass/add}" th:object="${schoolClass}" method="POST">
+            <label>ID:</label>
+            <input type="text" th:field="*{id}" required><br>
+
+            <label>Class Name:</label>
+            <input type="text" th:field="*{className}" required><br>
+
+            <label>Description:</label>
+            <input type="text" th:field="*{classDescription}" required><br>
+            <div class="action-buttons">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="backToTable()">Back</button>
+            </div>
+        </form>
     </div>
 </div>
 

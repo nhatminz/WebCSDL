@@ -20,7 +20,7 @@ public class DashboardController {
         return "Students";
     }
 
-    @GetMapping("/Class")
+    @GetMapping("/Classes")
     public String showClassManagement() {
         return "Classes";
     }

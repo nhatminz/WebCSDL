@@ -347,23 +347,21 @@
             </thead>
             <tbody>
             <!-- Example Row -->
-            <tr>
-                <td>1</td>
-                <td>Jane</td>
-                <td>Doe</td>
-                <td>2000-05-15</td>
-                <td>jane.doe@example.com</td>
-                <td>987654321</td>
-                <td>123 Elm Street</td>
-                <td>10-A</td>
-                <td>Science</td>
-                <td>3.8</td>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td th:text="${student.dateOfBirth}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.phoneNumber}"></td>
+                <td th:text="${student.address}"></td>
+                <td th:text="${student.studentClass.getClassName()}"></td>
+                <td th:text="${student.major.getMajorName()}"></td>
+                <td th:text="${student.gpa}"></td>
                 <td class="action-buttons">
                     <button class="update-btn" onclick="updateStudent(1)">Update</button>
                     <button class="delete-btn" onclick="deleteStudent(1)">Delete</button>
                 </td>
-            </tr>
-            <!-- Dynamic rows will go here -->
             </tbody>
         </table>
     </div>
@@ -372,19 +370,47 @@
     <div class="form-container" id="addStudentForm">
         <h2></h2>
         <h3>Add Student</h3>
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="date" id="dateOfBirth">
-        <input type="email" id="email" placeholder="Email">
-        <input type="text" id="phoneNumber" placeholder="Phone Number">
-        <input type="text" id="address" placeholder="Address">
-        <input type="text" id="studentClass" placeholder="Class">
-        <input type="text" id="major" placeholder="Major">
-        <input type="number" id="gpa" placeholder="GPA" step="0.1">
-        <div class="action-buttons">
-            <button onclick="submitStudent()">Submit</button>
-            <button onclick="backToTable()">Back</button>
-        </div>
+        <form th:action="@{/Students/add}" th:object="${student}" method="POST">
+            <label>ID:</label>
+            <input type="text" th:field="*{id}" required><br>
+
+            <label>First Name:</label>
+            <input type="text" th:field="*{firstName}" required><br>
+
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}" required><br>
+
+            <label>Date of Birth:</label>
+            <input type="date" th:field="*{dateOfBirth}" required><br>
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" required><br>
+
+            <label>Phone Number:</label>
+            <input type="text" th:field="*{phoneNumber}" required><br>
+
+            <label>Address:</label>
+            <input type="text" th:field="*{address}" required><br>
+
+            <label>Class:</label>
+            <select th:field="*{studentClass}" required>
+                <option th:each="cls : ${classes}" th:value="${cls}" th:text="${cls.className}"></option>
+            </select><br>
+
+            <label>Major:</label>
+            <select th:field="*{major}" required>
+                <option th:each="maj : ${majors}" th:value="${maj}" th:text="${maj.majorName}"></option>
+            </select><br>
+
+            <label>GPA:</label>
+            <input type="number" th:field="*{gpa}" step="0.01" required><br>
+            <div class="action-buttons">
+                <button onclick="submitStudent()">Submit</button>
+                <button onclick="backToTable()">Back</button>
+            </div>
+            <!--<button type="submit">Save</button>-->
+            <!--<button onclick="backToTable()">Back</button>-->
+        </form>
     </div>
 </div>
 

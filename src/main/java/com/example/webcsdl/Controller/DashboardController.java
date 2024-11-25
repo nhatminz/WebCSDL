@@ -10,19 +10,5 @@ public class DashboardController {
         return "Dashboard";
     }
 
-    @GetMapping("/Teachers")
-    public String showTeachersManagement() {
-        return "Teachers";
-    }
-
-    @GetMapping("/Classes")
-    public String showClassManagement() {
-        return "Classes";
-    }
-
-    @GetMapping("/Courses")
-    public String showCourseManagement() {
-        return "Courses";
-    }
 }
 

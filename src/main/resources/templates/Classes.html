@@ -253,7 +253,7 @@
     </style>
 </head>
 <body>
-<!-- Top Navbar -->
+<!-- Top Navbar (Không thay đổi) -->
 <div class="navbar">
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
@@ -265,7 +265,6 @@
         <a href="#" onclick="logout()">Logout</a>
     </div>
 </div>
-
 <!-- Sidebar -->
 <div class="sidebar">
     <a href="Dashboard" class="menu-item">
@@ -290,134 +289,116 @@
 
 <!-- Main Content -->
 <div class="main-content">
-    <!-- Add Course Button -->
+    <!-- Add Class Button -->
     <div class="add-section">
-        <button onclick="showAddCourseForm()">Add Course</button>
+        <button onclick="showAddClassForm()">Add Class</button>
     </div>
 
-    <!-- List Courses Table -->
-    <div id="coursesList">
+    <!-- List Classes Table -->
+    <div id="classesList">
         <div class="search-section">
             <input type="text" placeholder="Search...">
             <button>Search</button>
         </div>
-        <table id="coursesTable">
+        <table id="classesTable">
             <thead>
             <tr>
-                <th>Course ID</th>
-                <th>Course Name</th>
-                <th>Course Code</th>
-                <th>Credits</th>
-                <th>Major</th>
-                <th>Teacher</th>
-                <th>Schedule</th>
+                <th>Room Number</th>
+                <th>Building</th>
+                <th>Capacity</th>
+                <th>Schedules</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <!-- Example Row -->
             <tr>
-                <td>101</td>
-                <td>Introduction to Programming</td>
-                <td>CS101</td>
-                <td>3</td>
-                <td>Computer Science</td>
-                <td>Dr. Smith</td>
+                <td>A101</td>
+                <td>Main Building</td>
+                <td>30</td>
                 <td>Mon-Wed 10:00-12:00</td>
                 <td class="action-buttons">
                     <button class="update-btn">Update</button>
-                    <button class="delete-btn" onclick="deleteCourse(101)">Delete</button>
+                    <button class="delete-btn" onclick="deleteClass('A101')">Delete</button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div id="addCourseForm" class="form-container">
-        <h2>   </h2>
-        <h3>Add New Course</h3>
-        <input type="text" id="courseName" placeholder="Course Name">
-        <input type="text" id="courseCode" placeholder="Course Code">
-        <input type="number" id="credits" placeholder="Credits">
-        <input type="text" id="major" placeholder="Major">
-        <input type="text" id="teacher" placeholder="Teacher">
-        <input type="text" id="schedule" placeholder="Schedule">
+    <!-- Add Class Form -->
+    <div id="addClassForm" class="form-container">
+        <h3>Add New Class</h3>
+        <input type="text" id="roomNumber" placeholder="Room Number">
+        <input type="text" id="building" placeholder="Building">
+        <input type="number" id="capacity" placeholder="Capacity">
+        <input type="text" id="schedules" placeholder="Schedules">
         <div class="action-buttons">
-            <button onclick="addCourse()">Save</button>
+            <button onclick="addClass()">Save</button>
             <button onclick="goBack()">Back</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Dropdown toggle function
+    // Show the add class form
+    function showAddClassForm() {
+        document.getElementById('addClassForm').style.display = 'flex';
+        document.getElementById('classesList').style.display = 'none';
+    }
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdown-menu');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
-
-    // Function to handle logout
-    function logout() {
-        alert('Logging out...');
-        // You can implement logout logic here
-    }
-
-    // Show the add course form
-    function showAddCourseForm() {
-        document.getElementById('addCourseForm').style.display = 'flex';
-        document.getElementById('coursesList').style.display = 'none';
-    }
-
-    // Function to add course
-    function addCourse() {
-        const courseName = document.getElementById('courseName').value;
-        const courseCode = document.getElementById('courseCode').value;
-        const credits = document.getElementById('credits').value;
-        const major = document.getElementById('major').value;
-        const teacher = document.getElementById('teacher').value;
-        const schedule = document.getElementById('schedule').value;
+    // Function to add class
+    function addClass() {
+        const roomNumber = document.getElementById('roomNumber').value;
+        const building = document.getElementById('building').value;
+        const capacity = document.getElementById('capacity').value;
+        const schedules = document.getElementById('schedules').value;
 
         // Add new row to the table
-        const table = document.getElementById('coursesTable').getElementsByTagName('tbody')[0];
+        const table = document.getElementById('classesTable').getElementsByTagName('tbody')[0];
         const row = table.insertRow();
 
-        row.insertCell(0).textContent = Date.now(); // Use timestamp as unique course ID
-        row.insertCell(1).textContent = courseName;
-        row.insertCell(2).textContent = courseCode;
-        row.insertCell(3).textContent = credits;
-        row.insertCell(4).textContent = major;
-        row.insertCell(5).textContent = teacher;
-        row.insertCell(6).textContent = schedule;
-        const actionsCell = row.insertCell(7);
+        row.insertCell(0).textContent = roomNumber;
+        row.insertCell(1).textContent = building;
+        row.insertCell(2).textContent = capacity;
+        row.insertCell(3).textContent = schedules;
+        const actionsCell = row.insertCell(4);
         actionsCell.classList.add('action-buttons');
         actionsCell.innerHTML = `
-            <button class="update-btn" onclick="updateCourse()">Update</button>
-            <button class="delete-btn" onclick="deleteCourse(${Date.now()})">Delete</button>
+            <button class="update-btn" onclick="updateClass()">Update</button>
+            <button class="delete-btn" onclick="deleteClass('${roomNumber}')">Delete</button>
         `;
 
         // Clear form and hide it
-        document.getElementById('addCourseForm').style.display = 'none';
-        document.getElementById('coursesList').style.display = 'block';
+        document.getElementById('addClassForm').style.display = 'none';
+        document.getElementById('classesList').style.display = 'block';
     }
 
-    // Function to delete course
-    function deleteCourse(courseId) {
-        const rows = document.getElementById('coursesTable').rows;
+    // Function to delete class
+    function deleteClass(roomNumber) {
+        const rows = document.getElementById('classesTable').rows;
         for (let i = 1; i < rows.length; i++) {
-            if (rows[i].cells[0].textContent == courseId) {
+            if (rows[i].cells[0].textContent === roomNumber) {
                 rows[i].remove();
                 break;
             }
         }
     }
-    // Function to go back to courses list
+    function logout() {
+        alert('Logging out...');
+        // You can implement logout logic here
+    }
+    // Function to go back to classes list
     function goBack() {
-        document.getElementById('addCourseForm').style.display = 'none';
-        document.getElementById('coursesList').style.display = 'block';
+        document.getElementById('addClassForm').style.display = 'none';
+        document.getElementById('classesList').style.display = 'block';
     }
 
-    // Function to update course (you can add actual update functionality here)
-    function updateCourse() {
+    // Function to update class (you can add actual update functionality here)
+    function updateClass() {
         alert('Update functionality will be implemented.');
     }
 </script>

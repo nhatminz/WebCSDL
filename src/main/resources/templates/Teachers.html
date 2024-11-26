@@ -394,8 +394,8 @@
             <input type="text" th:field="*{phoneNumber}" required><br>
 
             <label>Department:</label>
-            <select th:field="*{department}" required>
-                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep.departmentName}"></option>
+            <select th:field="*{departmentId}" required>
+                <option th:each="dep : ${departments}" th:value="${dep.id}" th:text="${dep.departmentName}"></option>
             </select><br>
             <div class="action-buttons">
                 <button onclick="submitStudent()">Submit</button>

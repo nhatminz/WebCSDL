@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Major {
 
     @Setter
     @Getter
-    @Column(name = "major_name", nullable = false, length = 100)
+    @Column(name = "major_name", nullable = false, length = 100, unique = true)
     private String majorName;
 
     @Setter

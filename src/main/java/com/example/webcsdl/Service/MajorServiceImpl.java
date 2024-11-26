@@ -40,4 +40,14 @@ public class MajorServiceImpl implements MajorServices {
     public void deleteViaId(Long id) {
         majorRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Major> getMajorByName(String name) {
+        for (Major major : getAllMajor()) {
+            if (major.getMajorName().equals(name)) {
+                return Optional.of(major);
+            }
+        }
+        return Optional.empty();
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class SchoolClass {
 
     @Setter
     @Getter
-    @Column(name = "class_name", nullable = false, length = 50)
+    @Column(name = "class_name", nullable = false, length = 50, unique = true)
     private String className;
 
     @Setter

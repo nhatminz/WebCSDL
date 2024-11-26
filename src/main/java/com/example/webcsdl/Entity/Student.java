@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "students")
 public class Student {
-
     @Id
     private Long id;
 
@@ -27,7 +27,7 @@ public class Student {
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "email", length = 100)
     private String email;
@@ -39,11 +39,11 @@ public class Student {
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_id", referencedColumnName = "id")
+    @JoinColumn(name = "class_id", referencedColumnName = "id", nullable = false)
     private SchoolClass studentClass;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = false)
     private Major major;
 
     @Column(name = "gpa", precision = 3, scale = 2)

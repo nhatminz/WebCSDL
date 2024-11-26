@@ -408,19 +408,19 @@
             <input type="text" th:field="*{address}" required><br>
 
             <label>Class:</label>
-            <select th:field="*{studentClass}" required>
-                <option th:each="cls : ${classes}" th:value="${cls}" th:text="${cls.className}"></option>
+            <select th:field="*{classId}" required>
+                <option th:each="cls : ${classes}" th:value="${cls.id}" th:text="${cls.className}"></option>
             </select><br>
 
             <label>Major:</label>
-            <select th:field="*{major}" required>
-                <option th:each="maj : ${majors}" th:value="${maj}" th:text="${maj.majorName}"></option>
+            <select th:field="*{majorId}" required>
+                <option th:each="maj : ${majors}" th:value="${maj.id}" th:text="${maj.majorName}"></option>
             </select><br>
 
             <label>GPA:</label>
             <input type="number" th:field="*{gpa}" step="0.01" required><br>
             <div class="action-buttons">
-                <button onclick="submitStudent()">Submit</button>
+                <button type="submit">Save</button>
                 <button onclick="backToTable()">Back</button>
             </div>
             <!--<button type="submit">Save</button>-->

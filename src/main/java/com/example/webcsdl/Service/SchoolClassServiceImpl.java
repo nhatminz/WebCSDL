@@ -39,4 +39,15 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
     public void deleteViaId(Long id) {
         schoolClassRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<SchoolClass> getByName(String schoolName) {
+        for (SchoolClass schoolClass : getAllSchoolClass()) {
+            if (schoolClass.getClassName().equals(schoolName)) {
+                return Optional.of(schoolClass);
+            }
+        }
+
+        return Optional.empty();
+    }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "departments")
 public class Department {
-
     @Setter
     @Getter
     @Id

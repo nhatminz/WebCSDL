@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ScholarshipController {
     @Autowired
     private ScholarshipServiceImpl scholarshipServiceImpl;
-    @Autowired
-    public DepartmentServiceImpl departmentServiceImpl;
-    @Autowired
-    public ScholarshipServices scholarshipServices;
-    @GetMapping("/Scholarships")
+//    @Autowired
+//    public DepartmentServiceImpl departmentServiceImpl;
+//    @Autowired
+//    public ScholarshipServices scholarshipServices;
+    @GetMapping("/Scholarship")
     public String showScholarshipManagement(Model model) {
         model.addAttribute("scholarships", scholarshipServiceImpl.getAllScholarship());
         model.addAttribute("scholarship", new Scholarship());
-        model.addAttribute("departments", departmentServiceImpl.getAllDepartment());
+        //model.addAttribute("departments", departmentServiceImpl.getAllDepartment());
         return "Scholarship";
     }
 

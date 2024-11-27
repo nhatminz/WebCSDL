@@ -383,7 +383,7 @@
             <input type="number" th:field="*{amount}" step="0.01" required><br>
 
             <label>Student:</label>
-            <select th:field="*{student}" required>
+            <select th:field="*{studentId}" required>
                 <option th:each="stu : ${students}" th:value="${stu.id}" th:text="${stu.firstName + ' ' + stu.lastName}"></option>
             </select><br>
 

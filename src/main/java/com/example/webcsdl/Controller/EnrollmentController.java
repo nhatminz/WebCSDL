@@ -19,8 +19,8 @@ public class EnrollmentController {
     private CourseServiceImpl courseServiceImpl;
     @Autowired
     private StudentServiceImpl studentServiceImpl;
-    @Autowired
-    public EnrollmentServices enrollmentServices;
+//    @Autowired
+//    public EnrollmentServices enrollmentServices;
     @GetMapping("/Enrollment")
     public String showEnrollmentManagement(Model model) {
         model.addAttribute("enrollments", enrollmentServiceImpl.getAllEnrollments());

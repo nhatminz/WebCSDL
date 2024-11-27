@@ -40,6 +40,7 @@ public class StudentController {
     @GetMapping("/Students")
     public String showStudentManagement(Model model) {
         model.addAttribute("students", studentServiceImpl.getAllStudent());
+        //dòng này là DTO, để object để nhập thông tin thay vì object cũ, "student" là cái object trong file html
         model.addAttribute("student", new StudentDto());
         model.addAttribute("majors", majorServiceImpl.getAllMajor());
         model.addAttribute("classes", schoolClassServiceImpl.getAllSchoolClass());
@@ -47,6 +48,7 @@ public class StudentController {
     }
 
     @PostMapping("/Students/add")
+    //tham số của hàm phải là Dto
     public String addStudent(@ModelAttribute("student") StudentDto studentDto) {
         studentServiceImpl.saveStudent(toEntity(studentDto));
         return "redirect:/Students";

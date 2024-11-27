@@ -382,7 +382,7 @@
         <form th:action="@{/Enrollments/add}" method="POST">
             <label>Student:</label>
             <select name="studentId" required>
-                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.fullName}"></option>
+                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName + ' ' + student.lastName}"></option>
             </select><br>
 
             <label>Course:</label>

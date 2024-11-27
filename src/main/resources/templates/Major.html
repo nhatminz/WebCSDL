@@ -383,7 +383,9 @@
             <textarea th:field="*{description}" rows="4" required></textarea><br>
 
             <label>Department:</label>
+            <!-- sửa thành attribute của dto-->
             <select th:field="*{department}" required>
+                <!-- chỗ value phải thêm .id thành dept.id-->
                 <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept.departmentName}"></option>
             </select><br>
 

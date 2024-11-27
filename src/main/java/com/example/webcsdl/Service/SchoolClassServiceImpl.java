@@ -46,4 +46,8 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
     public SchoolClass getSchoolClassById(Long id) {
         return schoolClassRepository.findById(id).orElse(null);
     }
+
+    public List<SchoolClass> searchClasses(String query) {
+        return schoolClassRepository.findByClassNameContainingOrClassDescriptionContaining(query, query);
+    }
 }

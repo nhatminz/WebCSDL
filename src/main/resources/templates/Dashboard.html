@@ -288,13 +288,15 @@
 <!-- FullCalendar JS -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script>
+    // Dropdown toggle function
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdown-menu');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
+    // Function to handle logout
     function logout() {
-        window.location.href = 'login.html';
+        window.location.href = 'logout';
     }
 
     document.addEventListener('DOMContentLoaded', function () {

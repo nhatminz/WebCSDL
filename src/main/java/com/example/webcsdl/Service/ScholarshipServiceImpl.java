@@ -12,8 +12,6 @@ import java.util.Optional;
 @Service
 public class ScholarshipServiceImpl implements ScholarshipServices {
 
-  @Autowired
-  private ScholarshipServiceImpl scholarshipServiceImpl;
     @Autowired
     private ScholarshipRepository scholarshipRepository;
 

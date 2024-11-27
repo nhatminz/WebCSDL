@@ -23,7 +23,7 @@ public class MajorController {
 
     @GetMapping("/Major")
     public String showMajorManagement(Model model) {
-        model.addAttribute("Majors", majorServiceImpl.getAllMajor());
+        model.addAttribute("majors", majorServiceImpl.getAllMajor());
         model.addAttribute("major", new Major());
         model.addAttribute("departments", departmentServiceImpl.getAllDepartment());
         return "Major";

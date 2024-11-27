@@ -377,7 +377,7 @@
   <!-- Add/Edit Course Schedule Form -->
   <div class="form-container" id="addCourseScheduleForm">
     <h2>Add Course Schedule</h2>
-    <form th:action="@{/Courses/add}" th:object="${course}" method="POST">
+    <form th:action="@{/CourseSchedules/add}" th:object="${courseschedule}" method="POST">
       <label>ID:</label>
       <input type="text" th:field="*{id}" required><br>
 

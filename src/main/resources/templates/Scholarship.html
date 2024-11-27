@@ -384,7 +384,7 @@
 
             <label>Student:</label>
             <select th:field="*{student}" required>
-                <option th:each="stu : ${students}" th:value="${stu}" th:text="${stu.firstName + ' ' + stu.lastName}"></option>
+                <option th:each="stu : ${students}" th:value="${stu.id}" th:text="${stu.firstName + ' ' + stu.lastName}"></option>
             </select><br>
 
             <div class="action-buttons">

@@ -4,281 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Management System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 220px;
-            background-color: #34495e;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            position: fixed;
-            top: 60px;
-            bottom: 0;
-            left: 0;
-            overflow-y: auto;
-        }
-
-        .sidebar .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            color: white;
-        }
-
-        .sidebar .menu-item:hover {
-            background-color: #1abc9c;
-        }
-
-        .sidebar .menu-item i {
-            font-size: 18px;
-        }
-
-        /* Navbar (Top Header) */
-        .navbar {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        .navbar h1 {
-            font-size: 20px;
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .navbar .user-info img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info span {
-            font-size: 14px;
-        }
-
-        /* Dropdown Menu */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
-            z-index: 1000;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 10px;
-            color: #333;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .dropdown-menu a:hover {
-            background-color: #1abc9c;
-            color: white;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 220px;
-            margin-top: 60px;
-            padding: 20px;
-            flex: 1;
-        }
-
-        .search-section {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .search-section input {
-            padding: 8px 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            margin-right: 10px;
-        }
-
-        .search-section button {
-            padding: 8px 15px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .search-section button:hover {
-            background-color: #27ae60;
-        }
-
-        .add-section button {
-            padding: 8px 15px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .add-section button:hover {
-            background-color: #27ae60;
-        }
-
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: white;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #2c3e50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #e0e0e0;
-        }
-
-        /* Form Styling */
-        .form-container {
-            display: none;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-container input, .form-container select {
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-        }
-
-        .form-container button {
-            padding: 10px 20px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-container button:hover {
-            background-color: #27ae60;
-        }
-
-        .action-buttons button {
-            padding: 5px 10px;
-            margin-right: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            border-radius: 3px;
-            color: white;
-        }
-
-        .action-buttons .update-btn {
-            background-color: #f39c12;
-        }
-
-        .action-buttons .update-btn:hover {
-            background-color: #e67e22;
-        }
-
-        .action-buttons .delete-btn {
-            background-color: #e74c3c;
-        }
-
-        .action-buttons .delete-btn:hover {
-            background-color: #c0392b;
-        }
-
-        .form-container {
-            display: none;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-container input, .form-container select {
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-        }
-
-        .form-container button {
-            padding: 10px 20px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-container button:hover {
-            background-color: #27ae60;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 <!-- Top Navbar -->
@@ -376,36 +102,35 @@
 
     <!-- Add/Edit Teacher Form -->
     <div class="form-container" id="addTeacherForm">
-        <h2></h2>
         <h3>Add Teacher</h3>
         <form th:action="@{/Teachers/add}" th:object="${teacher}" method="POST">
             <label>ID:</label>
-            <input type="number" th:field="*{id}" required><br>
+            <input type="number" th:field="*{id}" required>
 
             <label>First Name:</label>
-            <input type="text" th:field="*{firstName}" required><br>
+            <input type="text" th:field="*{firstName}" required>
 
             <label>Last Name:</label>
-            <input type="text" th:field="*{lastName}" required><br>
+            <input type="text" th:field="*{lastName}" required>
 
             <label>Email:</label>
-            <input type="text" th:field="*{email}" required><br>
+            <input type="text" th:field="*{email}" required>
 
             <label>Phone Number:</label>
-            <input type="text" th:field="*{phoneNumber}" required><br>
+            <input type="text" th:field="*{phoneNumber}" required>
 
             <label>Department:</label>
             <select th:field="*{departmentId}" required>
                 <option th:each="dep : ${departments}" th:value="${dep.id}" th:text="${dep.departmentName}"></option>
-            </select><br>
-            <div class="action-buttons">
-                <button onclick="submitStudent()">Submit</button>
-                <button onclick="backToTable()">Back</button>
+            </select>
+
+            <div class="action-button">
+                <button type="button" onclick="backToTable()">Back</button>
+                <button type="submit">Save</button>
             </div>
-            <!--<button type="submit">Save</button>-->
-            <!--<button onclick="backToTable()">Back</button>-->
         </form>
     </div>
+
 </div>
 <script>
     function showAddTeacherForm() {

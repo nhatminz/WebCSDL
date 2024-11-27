@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class SchoolClassServiceImpl implements SchoolClassServices {
     @Autowired
-    SchoolClassRepository schoolClassRepository;
+    private SchoolClassRepository schoolClassRepository;
 
     @Override
     public List<SchoolClass> getAllSchoolClass() {
@@ -26,13 +26,7 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
     @Override
     public SchoolClass getById(Long id) {
         Optional<SchoolClass> schoolClass = schoolClassRepository.findById(id);
-        SchoolClass schClass = null;
-        if (schoolClass.isPresent()) {
-            schClass = schoolClass.get();
-        } else {
-            throw new RuntimeException("School class not found");
-        }
-        return schClass;
+        return schoolClass.orElseThrow(() -> new RuntimeException("School class not found"));
     }
 
     @Override
@@ -42,12 +36,14 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
 
     @Override
     public Optional<SchoolClass> getByName(String schoolName) {
-        for (SchoolClass schoolClass : getAllSchoolClass()) {
-            if (schoolClass.getClassName().equals(schoolName)) {
-                return Optional.of(schoolClass);
-            }
-        }
+        return schoolClassRepository.findByClassName(schoolName);
+    }
 
-        return Optional.empty();
+    public void deleteSchoolClassById(Long id) {
+        schoolClassRepository.deleteById(id);
+    }
+
+    public SchoolClass getSchoolClassById(Long id) {
+        return schoolClassRepository.findById(id).orElse(null);
     }
 }

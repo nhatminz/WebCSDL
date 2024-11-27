@@ -6,11 +6,15 @@ import com.example.webcsdl.Service.MajorServiceImpl;
 import com.example.webcsdl.Service.StudentServiceImpl;
 import com.example.webcsdl.Service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class CourseController {
@@ -29,6 +33,13 @@ public class CourseController {
         model.addAttribute("teachers",teacherServiceImpl.getAllTeacher());
         return "Courses";
     }
+
+    @GetMapping("/Courses/search")
+    public ResponseEntity<List<Course>> searchCourses(@RequestParam String query) {
+        List<Course> courses = courseServiceImpl.searchCourses(query);
+        return ResponseEntity.ok(courses);
+    }
+
 
     @PostMapping("/Courses/add")
     public String addCourse(@ModelAttribute("course") CourseDto courseDto) {

@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,29 +96,30 @@
     </div>
 
     <!-- Add/Edit Major Form -->
-    <div class="form-container" id="addMajorForm">
-        <h2>Add Major</h2>
+    <div id="addMajorForm" class="form-container">
         <form th:action="@{/Majors/add}" th:object="${major}" method="POST">
-            <label>ID:</label>
-            <input type="text" th:field="*{id}" required><br>
+            <label for="id">ID:</label>
+            <input type="text" id="id" th:field="*{id}" required>
 
-            <label>Major Name:</label>
-            <input type="text" th:field="*{majorName}" required><br>
+            <label for="majorName">Major Name:</label>
+            <input type="text" id="majorName" th:field="*{majorName}" required>
 
-            <label>Description:</label>
-            <textarea th:field="*{description}" rows="4" required></textarea><br>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}" rows="3" required></textarea>
 
-            <label>Department:</label>
-            <select th:field="*{department}" required>
+            <label for="department">Department:</label>
+            <select id="department" th:field="*{department}" required>
                 <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept.departmentName}"></option>
-            </select><br>
+            </select>
 
-            <div class="action-button">
-                <button type="submit">Save</button>
-                <button type="button" onclick="backToTable()">Back</button>
+            <div class="action-buttons">
+                <button type="button" onclick="backToTable()" class="back-btn">Back</button>
+                <button type="submit" class="save-btn">Save</button>
             </div>
         </form>
     </div>
+
+
 </div>
 
 <script>

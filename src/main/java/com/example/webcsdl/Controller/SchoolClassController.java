@@ -32,14 +32,13 @@ public class SchoolClassController {
     @DeleteMapping("/SchoolClass/delete/{id}")
     @ResponseBody
     public ResponseEntity<String> deleteSchoolClass(@PathVariable Long id) {
-        try {
-            schoolClassServiceImpl.deleteSchoolClassById(id);
+        boolean isDeleted = schoolClassServiceImpl.deleteSchoolClassById(id);
+        if (isDeleted) {
             return ResponseEntity.ok("Deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error deleting the class: " + e.getMessage());
+        } else {
+            return ResponseEntity.status(404).body("Class not found");
         }
     }
-
 
     @GetMapping("/SchoolClass/{id}")
     @ResponseBody
@@ -53,18 +52,24 @@ public class SchoolClassController {
     }
 
     @PostMapping("/SchoolClass/update/{id}")
-    public String updateSchoolClass(@PathVariable("id") Long id, @ModelAttribute("schoolClass") SchoolClass updatedClass) {
+    public String updateSchoolClass(@PathVariable("id") Long id, @ModelAttribute("schoolClass") SchoolClass updatedClass, Model model) {
         SchoolClass existingClass = schoolClassServiceImpl.getSchoolClassById(id);
+
         if (existingClass != null) {
             existingClass.setClassName(updatedClass.getClassName());
             existingClass.setClassDescription(updatedClass.getClassDescription());
             schoolClassServiceImpl.saveSchoolClass(existingClass);
+            model.addAttribute("message", "Class updated successfully");
+        } else {
+            model.addAttribute("error", "Class not found");
         }
         return "redirect:/Classes";
     }
+
+
     @GetMapping("/SchoolClass/search")
     public ResponseEntity<List<SchoolClass>> searchClasses(@RequestParam String query) {
-        List<SchoolClass> results = schoolClassServiceImpl.searchClasses(query);  // Gọi từ service
+        List<SchoolClass> results = schoolClassServiceImpl.searchClasses(query);
         return ResponseEntity.ok(results);
     }
 }

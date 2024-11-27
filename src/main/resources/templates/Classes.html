@@ -61,8 +61,8 @@
     </div>
     <div id="classesList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchClasses()">
+            <button onclick="searchClasses()">Search</button>
         </div>
         <table id="classesTable">
             <thead>
@@ -79,8 +79,10 @@
                 <td th:text="${schoolClass.className}"></td>
                 <td th:text="${schoolClass.classDescription}"></td>
                 <td class="action-buttons">
-                    <button class="update-btn" th:onclick="'updateSchoolClass(' + ${schoolClass.id} + ')'">Update</button>
-                    <button class="delete-btn" th:onclick="'deleteSchoolClass(' + ${schoolClass.id} + ')'">Delete</button>
+                    <button class="update-btn" th:onclick="'updateSchoolClass(' + ${schoolClass.id} + ')'">Update
+                    </button>
+                    <button class="delete-btn" th:onclick="'deleteSchoolClass(' + ${schoolClass.id} + ')'">Delete
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -110,17 +112,19 @@
     <div id="updateClassForm" class="form-container" style="display: none;">
         <form th:action="@{/SchoolClass/update/{id}(id=${schoolClass.id})}" th:object="${schoolClass}" method="POST">
             <label>ID:</label>
-            <input type="text" name="id" th:value="${schoolClass.id}" >
+            <input type="text" th:value="${schoolClass.id}" readonly>
+
             <label>Class Name:</label>
-            <input type="text" name="className" th:value="${schoolClass.className}" >
+            <input type="text" th:field="*{className}" required>
+
             <label>Description:</label>
-            <input type="text" name="classDescription" th:value="${schoolClass.classDescription}" >
+            <input type="text" th:field="*{classDescription}" required>
+
             <div class="action-buttons">
                 <button type="button" onclick="hideUpdateForm()">Cancel</button>
                 <button type="submit">Save</button>
             </div>
         </form>
-
     </div>
 </div>
 <script>
@@ -159,10 +163,11 @@
                 })
                 .catch(error => {
                     console.error("Error:", error);
-                    alert("Error deleting the class");
+                    alert("Error deleting");
                 });
         }
     }
+
 
     function updateSchoolClass(classId) {
         const form = document.getElementById('updateClassForm');
@@ -184,6 +189,43 @@
     function hideUpdateForm() {
         document.getElementById('updateClassForm').style.display = 'none';
         document.getElementById('classesList').style.display = 'block';
+    }
+
+    function searchClasses() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+        if (!searchTerm) {
+            return;
+        }
+        fetch(`/SchoolClass/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#classesTable tbody");
+                tableBody.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(schoolClass => {
+                        const row = document.createElement('tr');
+                        row.id = `row-${schoolClass.id}`;
+                        row.innerHTML = `
+                            <td>${schoolClass.id}</td>
+                            <td>${schoolClass.className}</td>
+                            <td>${schoolClass.classDescription}</td>
+                            <td class="action-buttons">
+                                <button class="update-btn" onclick="updateSchoolClass(${schoolClass.id})">Update</button>
+                                <button class="delete-btn" onclick="deleteSchoolClass(${schoolClass.id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="4">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching classes:", error);
+            });
     }
 </script>
 </body>

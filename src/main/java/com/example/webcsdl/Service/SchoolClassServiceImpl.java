@@ -39,9 +39,16 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
         return schoolClassRepository.findByClassName(schoolName);
     }
 
-    public void deleteSchoolClassById(Long id) {
-        schoolClassRepository.deleteById(id);
+    public boolean deleteSchoolClassById(Long id) {
+        SchoolClass schoolClass = schoolClassRepository.findById(id).orElse(null);
+        if (schoolClass != null) {
+            schoolClassRepository.delete(schoolClass);
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public SchoolClass getSchoolClassById(Long id) {
         return schoolClassRepository.findById(id).orElse(null);

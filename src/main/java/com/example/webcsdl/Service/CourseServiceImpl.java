@@ -36,6 +36,10 @@ public class CourseServiceImpl implements CourseServices {
         return cou;
     }
 
+    public List<Course> searchCourses(String query) {
+        return courseRepository.findByCourseNameContainingOrCourseCodeContaining(query, query);
+    }
+
     @Override
     public void deleteViaId(Long id) {
         courseRepository.deleteById(id);

@@ -27,6 +27,7 @@ public class StudentServiceImpl implements StudentServices {
     public Student getById(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         Student stud = null;
+
         if (student.isPresent()) {
             stud = student.get();
         } else {
@@ -39,6 +40,4 @@ public class StudentServiceImpl implements StudentServices {
     public void deleteViaId(Long id) {
         studentRepository.deleteById(id);
     }
-
-
 }

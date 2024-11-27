@@ -346,6 +346,9 @@
     <div class="form-container" id="addDepartmentForm" style="display: none;">
         <h2>Add Department</h2>
         <form th:action="@{/Departments/add}" th:object="${department}" method="POST">
+            <label>Department ID:</label>
+            <input type="number" th:field="*{id}" required><br>
+
             <label>Department Name:</label>
             <input type="text" th:field="*{departmentName}" required><br>
 

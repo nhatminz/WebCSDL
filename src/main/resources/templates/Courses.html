@@ -364,13 +364,13 @@
             <input type="text" th:field="*{credits}" required><br>
 
             <label>Major:</label>
-            <select th:field="*{major}" required>
-                <option th:each="maj : ${majors}" th:value="${maj}" th:text="${maj.majorName}"></option>
+            <select th:field="*{majorId}" required>
+                <option th:each="maj : ${majors}" th:value="${maj.id}" th:text="${maj.majorName}"></option>
             </select><br>
 
             <label>Teacher:</label>
-            <select th:field="*{teacher}" required>
-                <option th:each="teach : ${teachers}" th:value="${teach}"
+            <select th:field="*{teacherId}" required>
+                <option th:each="teach : ${teachers}" th:value="${teach.id}"
                         th:text="${teach.firstName + teach.lastName}"></option>
             </select><br>
 

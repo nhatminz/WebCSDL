@@ -195,7 +195,7 @@ tr:hover {
 .form-container {
     display: none;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .form-container input, .form-container select {

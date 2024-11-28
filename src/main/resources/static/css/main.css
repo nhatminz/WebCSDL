@@ -196,6 +196,16 @@ tr:hover {
     display: block;
     flex-direction: column;
     gap: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    max-width: 500px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .container input, .container select {
@@ -204,6 +214,9 @@ tr:hover {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 300px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.5;
 }
 
 .container button {

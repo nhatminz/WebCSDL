@@ -1,7 +1,9 @@
 package com.example.webcsdl.Service;
 
 import com.example.webcsdl.Entity.SchoolClass;
+import com.example.webcsdl.Entity.Student;
 import com.example.webcsdl.Repository.SchoolClassRepository;
+import com.example.webcsdl.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class SchoolClassServiceImpl implements SchoolClassServices {
     @Autowired
     SchoolClassRepository schoolClassRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Override
     public List<SchoolClass> getAllSchoolClass() {
@@ -37,7 +42,18 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
 
     @Override
     public void deleteViaId(Long id) {
+        updateClassIdForStudents(id);
         schoolClassRepository.deleteById(id);
+    }
+
+    public void updateClassIdForStudents(long classId) {
+        SchoolClass schoolClass = schoolClassRepository.findById(classId)
+                .orElseThrow(() -> new RuntimeException("Class not found with ID: " + classId));
+        List<Student> students = studentRepository.findByStudentClass(schoolClass);
+        for (Student student : students) {
+            student.setStudentClass(null);
+            studentRepository.save(student);
+        }
     }
 
     @Override

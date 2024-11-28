@@ -50,4 +50,8 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
 
         return Optional.empty();
     }
+
+    public List<SchoolClass> searchClasses(String query) {
+        return schoolClassRepository.findByClassNameContainingOrClassDescriptionContaining(query, query);
+    }
 }

@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -54,7 +51,27 @@ public class StudentController {
         return "redirect:/Students";
     }
 
+    @GetMapping("/Students/update/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Student student = studentServiceImpl.getById(id);
+        if (student == null) {
+            throw new RuntimeException("Student not found with ID: " + id);
+        }
+        model.addAttribute("student", student);
+        model.addAttribute("studentDto", new StudentDto());
+        model.addAttribute("majors", majorServiceImpl.getAllMajor());
+        model.addAttribute("classes", schoolClassServiceImpl.getAllSchoolClass());
+        return "updateStudentForm";
+    }
 
+    @PostMapping("/Students/save")
+    public String updateStudent(@ModelAttribute("studentDto") StudentDto studentDto) {
+        System.out.println("Updating student with ID: " + studentDto.getId());
+        System.out.println("Student DTO: " + studentDto);
+        Student student = toEntity(studentDto);
+        studentServiceImpl.saveStudent(student);
+        return "redirect:/Students";
+    }
 
     public Student toEntity(StudentDto dto) {
         Student result = new Student();

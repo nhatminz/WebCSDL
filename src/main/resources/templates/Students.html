@@ -66,8 +66,8 @@
     <!-- List Students Table -->
     <div id="studentsList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchStudents()">
+            <button onclick="searchStudents()">Search</button>
         </div>
         <table id="studentsTable">
             <thead>
@@ -175,6 +175,50 @@
     function backToTable() {
         document.getElementById('addStudentForm').style.display = 'none';
         document.getElementById('studentsList').style.display = 'block';
+    }
+
+    function searchStudents() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+        // if (!searchTerm) {
+        //     return;
+        // }
+        fetch(`/Student/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#studentsTable tbody");
+                tableBody.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(student => {
+                        const row = document.createElement('tr');
+                        row.id = `row-${student.id}`;
+                        row.innerHTML = `
+                        <td>${student.id}</td>
+                        <td>${student.firstName} </td>
+                        <td>${student.lastName}</td>
+                        <td>${student.dateOfBirth}</td>
+                        <td>${student.email}</td>
+                        <td>${student.phoneNumber}</td>
+                        <td>${student.address}</td>
+                        <td>${student.className}</td>
+                        <td>${student.majorName}</td>
+                        <td>${student.gpa}</td>
+                        <td class="action-buttons">
+                            <button class="update-btn" onclick="updateStudent(${student.id})">Update</button>
+                            <button class="delete-btn" onclick="deleteStudent(${student.id})">Delete</button>
+                        </td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="6">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching students:", error);
+            });
     }
 </script>
 </body>

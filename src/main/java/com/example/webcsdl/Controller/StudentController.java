@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,7 +47,6 @@ public class StudentController {
     }
 
     @PostMapping("/Students/add")
-    //tham số của hàm phải là Dto
     public String addStudent(@ModelAttribute("student") StudentDto studentDto) {
         studentServiceImpl.saveStudent(toEntity(studentDto));
         return "redirect:/Students";
@@ -66,7 +66,7 @@ public class StudentController {
         return "updateStudentForm";
     }
 
-    private static StudentDto toDto(Student student) {
+    private StudentDto toDto(Student student) {
         StudentDto studentDto = new StudentDto();
         studentDto.setId(student.getId());
         studentDto.setFirstName(student.getFirstName());
@@ -78,16 +78,23 @@ public class StudentController {
         studentDto.setGpa(student.getGpa());
         studentDto.setClassId(student.getStudentClass().getId());
         studentDto.setMajorId(student.getMajor().getId());
+        studentDto.setClassName(student.getStudentClass().getClassName());
+        studentDto.setMajorName(student.getMajor().getMajorName());
         return studentDto;
     }
 
     @PostMapping("/Students/save")
     public String updateStudent(@ModelAttribute("studentDto") StudentDto studentDto) {
-//        System.out.println("Updating student with ID: " + studentDto.getId());
-//        System.out.println("Student DTO: " + studentDto);
         Student student = toEntity(studentDto);
         studentServiceImpl.saveStudent(student);
         return "redirect:/Students";
+    }
+
+    @GetMapping("/Student/search")
+    public ResponseEntity<List<StudentDto>> searchStudents(@RequestParam String query) {
+        List<Student> students = studentServiceImpl.searchStudents(query);
+        List<StudentDto> studentDtos = students.stream().map(this::toDto).toList();
+        return ResponseEntity.ok(studentDtos);
     }
 
     @GetMapping("/deleteStudent/{id}")
@@ -100,7 +107,6 @@ public class StudentController {
         }
         return "redirect:/Students";
     }
-
 
     public Student toEntity(StudentDto dto) {
         Student result = new Student();

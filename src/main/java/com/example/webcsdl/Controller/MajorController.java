@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -35,6 +36,25 @@ public class MajorController {
         return "redirect:/Major";
     }
 
+    @GetMapping("/Majors/update/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Major major = majorServiceImpl.getById(id);
+        if (major == null) {
+            throw new RuntimeException("Major not found");
+        }
+        MajorDto majorDto = toDto(major);
+        model.addAttribute("major", major);
+        model.addAttribute("majorDto", majorDto);
+        model.addAttribute("departments", departmentServiceImpl.getAllDepartment());
+        return "updateMajorForm";
+    }
+
+    @PostMapping("/Majors/save")
+    public String updateMajor(@ModelAttribute("major") MajorDto majorDto) {
+        majorServiceImpl.saveMajor(toEntity(majorDto));
+        return "redirect:/Major";
+    }
+
     public Major toEntity(MajorDto majorDto) {
         Major result = new Major();
         result.setId(majorDto.getId());
@@ -43,6 +63,15 @@ public class MajorController {
 
         Department department = departmentServiceImpl.getById(majorDto.getDepartmentId());
         result.setDepartment(department);
+        return result;
+    }
+
+    private static MajorDto toDto(Major major) {
+        MajorDto result = new MajorDto();
+        result.setId(major.getId());
+        result.setMajorName(major.getMajorName());
+        result.setDescription(major.getDescription());
+        result.setDepartmentId(major.getDepartment().getId());
         return result;
     }
 }

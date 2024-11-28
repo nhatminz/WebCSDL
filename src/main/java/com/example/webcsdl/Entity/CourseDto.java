@@ -16,4 +16,6 @@ public final class CourseDto {
     public Integer credits;
     public Long majorId;
     public Long teacherId;
+    private String majorName;
+    private String teacherName;
 }

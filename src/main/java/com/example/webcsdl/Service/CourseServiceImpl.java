@@ -1,7 +1,6 @@
 package com.example.webcsdl.Service;
 
 import com.example.webcsdl.Entity.Course;
-import com.example.webcsdl.Entity.Major;
 import com.example.webcsdl.Repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,10 @@ public class CourseServiceImpl implements CourseServices {
             throw new RuntimeException("Course not found");
         }
         return cou;
+    }
+
+    public List<Course> searchCourses(String query) {
+        return courseRepository.findByCourseNameContainingIgnoreCase(query);
     }
 
     @Override

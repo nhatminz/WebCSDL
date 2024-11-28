@@ -16,6 +16,6 @@ public class EnrollmentDto {
    private String studentName;
    private Long courseId;
    private String courseName;
-   private Date enrollmentDate;
+   private String enrollmentDate;
    private Double grade;
 }

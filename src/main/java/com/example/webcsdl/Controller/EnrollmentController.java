@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Controller
 public class EnrollmentController {
     @Autowired
@@ -47,6 +50,8 @@ public class EnrollmentController {
         enrollment.setCourse(course);
         EnrollmentId enrollmentId = new EnrollmentId(enrollmentDto.getStudentId(), enrollmentDto.getCourseId());
         enrollment.setId(enrollmentId);
+        enrollment.setEnrollmentDate(LocalDate.parse(enrollmentDto.getEnrollmentDate()));
+        enrollment.setGrade(enrollmentDto.getGrade());
         return enrollment;
     }
 

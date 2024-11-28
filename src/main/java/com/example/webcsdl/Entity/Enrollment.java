@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -30,7 +30,7 @@ public class Enrollment {
 
     // Getter và Setter cho enrollmentDate
     @Column(name = "enrollment_date")
-    private Date enrollmentDate;
+    private LocalDate enrollmentDate;
 
     @Column(name = "grade")
     private Double grade;
@@ -38,7 +38,7 @@ public class Enrollment {
     // Constructor mặc định
     public Enrollment() {}
 
-    public Enrollment(EnrollmentId id, Student student, Course course, Date enrollmentDate) {
+    public Enrollment(EnrollmentId id, Student student, Course course, LocalDate enrollmentDate) {
         this.id = id;
         this.student = student;
         this.course = course;

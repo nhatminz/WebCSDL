@@ -1,56 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Student</title>
-  <link rel="stylesheet" href="/css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Student</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<div class="main-content">
-  <h2>Update Student</h2>
-  <form th:action="@{/Students/save}" th:object="${studentDto}" method="POST">
-    <label for="id">ID</label>
-    <input type="text" id="id" th:field="*{id}" required>
-
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" th:field="*{firstName}" required>
-
-    <label for="lastName">Last Name</label>
-    <input type="text" id="lastName" th:field="*{lastName}" required>
-
-    <label for="dateOfBirth">Date of Birth</label>
-    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required>
-
-    <label for="email">Email</label>
-    <input type="email" id="email" th:field="*{email}" required>
-
-    <label for="phoneNumber">Phone Number</label>
-    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
-
-    <label for="address">Address</label>
-    <input type="text" id="address" th:field="*{address}" required>
-
-    <label for="classId">Class</label>
-    <select id="classId" th:field="*{classId}" required>
-      <option th:each="cls : ${classes}" th:value="${cls.id}" th:text="${cls.className}"
-              th:selected="${student.studentClass?.id == cls.id}"></option>
-    </select>
-
-    <label for="majorId">Major</label>
-    <select id="majorId" th:field="*{majorId}" required>
-      <option th:each="maj : ${majors}" th:value="${maj.id}" th:text="${maj.majorName}"
-              th:selected="${student.major?.id == maj.id}"></option>
-    </select>
-
-    <label for="gpa">GPA</label>
-    <input type="number" id="gpa" th:field="*{gpa}" step="0.01" required>
-
-    <div class="action-button">
-      <button type="button" onclick="window.location.href='/Students'">Cancel</button>
-      <button type="submit">Update</button>
+<div class="navbar">
+    <h1>School Management System</h1>
+    <div class="user-info" onclick="toggleDropdown()">
+        <img src="https://via.placeholder.com/35" alt="User Avatar">
+        <span>username</span>
     </div>
-  </form>
+    <div id="dropdown-menu" class="dropdown-menu">
+        <a href="Profile.html">Profile</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </div>
+</div>
+
+<div class="sidebar">
+    <a href="Dashboard" class="menu-item">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+    </a>
+    <a href="Courses" class="menu-item">
+        <i class="fas fa-book"></i> Courses
+    </a>
+    <a href="Students" class="menu-item">
+        <i class="fas fa-user-graduate"></i> Students
+    </a>
+    <a href="CourseSchedule" class="menu-item">
+        <i class="fas fa-calendar-alt"></i> Course Schedule
+    </a>
+    <a href="Enrollment" class="menu-item">
+        <i class="fas fa-clipboard-check"></i> Enrollment
+    </a>
+    <a href="Major" class="menu-item">
+        <i class="fas fa-graduation-cap"></i> Major
+    </a>
+    <a href="Scholarship" class="menu-item">
+        <i class="fas fa-gift"></i> Scholarship
+    </a>
+    <a href="Department" class="menu-item">
+        <i class="fas fa-building"></i> Department
+    </a>
+    <a href="Teachers" class="menu-item">
+        <i class="fas fa-user-tie"></i> Teachers
+    </a>
+    <a href="Classes" class="menu-item">
+        <i class="fas fa-chalkboard-teacher"></i> Classes
+    </a>
+    <a href="Settings" class="menu-item">
+        <i class="fas fa-cogs"></i> Settings
+    </a>
+</div>
+
+<div class="form-container">
+    <h2>Update Student</h2>
+    <form th:action="@{/Students/save}" th:object="${studentDto}" method="POST">
+        <label for="id">ID</label>
+        <input type="text" id="id" th:field="*{id}" required>
+
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" th:field="*{firstName}" required>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" th:field="*{lastName}" required>
+
+        <label for="dateOfBirth">Date of Birth</label>
+        <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" required>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" th:field="*{address}" required>
+
+        <label for="classId">Class</label>
+        <select id="classId" th:field="*{classId}" required>
+            <option th:each="cls : ${classes}" th:value="${cls.id}" th:text="${cls.className}"
+                    th:selected="${student.studentClass?.id == cls.id}"></option>
+        </select>
+
+        <label for="majorId">Major</label>
+        <select id="majorId" th:field="*{majorId}" required>
+            <option th:each="maj : ${majors}" th:value="${maj.id}" th:text="${maj.majorName}"
+                    th:selected="${student.major?.id == maj.id}"></option>
+        </select>
+
+        <label for="gpa">GPA</label>
+        <input type="number" id="gpa" th:field="*{gpa}" step="0.01" required>
+
+        <div class="action-button">
+            <button type="button" onclick="window.location.href='/Students'">Cancel</button>
+            <button type="submit">Update</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

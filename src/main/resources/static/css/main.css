@@ -193,7 +193,7 @@ tr:hover {
 
 /* Form Styling */
 .form-container {
-    display: none;
+    display: block;
     flex-direction: column;
     gap: 10px;
 }

@@ -82,8 +82,8 @@ public class StudentController {
 
     @PostMapping("/Students/save")
     public String updateStudent(@ModelAttribute("studentDto") StudentDto studentDto) {
-        System.out.println("Updating student with ID: " + studentDto.getId());
-        System.out.println("Student DTO: " + studentDto);
+//        System.out.println("Updating student with ID: " + studentDto.getId());
+//        System.out.println("Student DTO: " + studentDto);
         Student student = toEntity(studentDto);
         studentServiceImpl.saveStudent(student);
         return "redirect:/Students";

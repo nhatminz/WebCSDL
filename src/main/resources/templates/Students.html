@@ -99,14 +99,12 @@
                 <td th:text="${student.gpa}"></td>
                 <td class="action-buttons">
                     <a th:href="@{/Students/update/{id}(id=${student.id})}" class="update-btn">Update</a>
-                    <button class="delete-btn" th:onclick="'deleteStudent(' + ${student.id} + ')'" >Delete</button>
+                    <a th:href="@{/deleteStudent/{id}(id=${student.id})}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-
-
 
     <!-- Add/Edit Student Form -->
     <div class="form-container" id="addStudentForm">

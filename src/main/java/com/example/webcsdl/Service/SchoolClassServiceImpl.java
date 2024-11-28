@@ -15,9 +15,6 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
     @Autowired
     SchoolClassRepository schoolClassRepository;
 
-    @Autowired
-    private StudentRepository studentRepository;
-
     @Override
     public List<SchoolClass> getAllSchoolClass() {
         return schoolClassRepository.findAll();
@@ -42,20 +39,8 @@ public class SchoolClassServiceImpl implements SchoolClassServices {
 
     @Override
     public void deleteViaId(Long id) {
-        updateClassIdForStudents(id);
         schoolClassRepository.deleteById(id);
     }
-
-    public void updateClassIdForStudents(long classId) {
-        SchoolClass schoolClass = schoolClassRepository.findById(classId)
-                .orElseThrow(() -> new RuntimeException("Class not found with ID: " + classId));
-        List<Student> students = studentRepository.findByStudentClass(schoolClass);
-        for (Student student : students) {
-            student.setStudentClass(null);
-            studentRepository.save(student);
-        }
-    }
-
     @Override
     public Optional<SchoolClass> getByName(String schoolName) {
         for (SchoolClass schoolClass : getAllSchoolClass()) {

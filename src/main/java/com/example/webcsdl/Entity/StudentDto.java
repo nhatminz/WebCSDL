@@ -23,4 +23,6 @@ public final class StudentDto {
     public Long classId;
     public Long majorId;
     public BigDecimal gpa;
+    private String className;
+    private String majorName;
 }

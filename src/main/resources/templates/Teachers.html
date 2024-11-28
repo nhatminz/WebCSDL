@@ -91,7 +91,7 @@
                 <td th:text="${teacher.phoneNumber}">
                 <td th:text="${teacher.department.getDepartmentName()}">
                 <td class="action-buttons">
-                    <button class="update-btn" onclick="updateStudent(1)">Update</button>
+                <a th:href="@{/Teachers/update/{id}(id=${teacher.id})}" class="update-btn">Update</a>
                     <button class="delete-btn" onclick="deleteStudent(1)">Delete</button>
                 </td>
             </tr>

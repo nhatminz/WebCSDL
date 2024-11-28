@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -88,6 +89,18 @@ public class StudentController {
         studentServiceImpl.saveStudent(student);
         return "redirect:/Students";
     }
+
+    @GetMapping("/deleteStudent/{id}")
+    public String deleteStudentById(@PathVariable(value = "id") long id, RedirectAttributes redirectAttributes) {
+        try {
+            studentServiceImpl.deleteViaId(id);
+            redirectAttributes.addFlashAttribute("message", "Student deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete student with ID: " + id);
+        }
+        return "redirect:/Students";
+    }
+
 
     public Student toEntity(StudentDto dto) {
         Student result = new Student();

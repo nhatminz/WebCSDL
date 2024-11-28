@@ -36,10 +36,6 @@ public class StudentServiceImpl implements StudentServices {
         return stud;
     }
 
-    public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
-    }
-
     @Override
     public void deleteViaId(Long id) {
         studentRepository.deleteById(id);

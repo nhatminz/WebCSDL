@@ -357,17 +357,17 @@
             <tbody>
             <!-- Example Row -->
             <tr th:each="enrollment : ${enrollments}">
-                <td th:text="${enrollment.enrollmentId.studentId}"></td>
-                <td th:text="${enrollment.student.fullName}"></td>
-                <td th:text="${enrollment.enrollmentId.courseId}"></td>
+                <td th:text="${enrollment.id.studentId}"></td>
+                <td th:text="${enrollment.student.firstName + ' ' + enrollment.student.lastName}"></td>
+                <td th:text="${enrollment.id.courseId}"></td>
                 <td th:text="${enrollment.course.courseName}"></td>
                 <td class="action-buttons">
                     <button class="update-btn"
-                            onclick="updateEnrollment(${enrollment.enrollmentId.studentId}, ${enrollment.enrollmentId.courseId})">
+                            onclick="updateEnrollment('${enrollment.id.studentId}', '${enrollment.Id.courseId}')">
                         Update
                     </button>
                     <button class="delete-btn"
-                            onclick="deleteEnrollment(${enrollment.enrollmentId.studentId}, ${enrollment.enrollmentId.courseId})">
+                            onclick="deleteEnrollment('${enrollment.id.studentId}', '${enrollment.id.courseId}')">
                         Delete
                     </button>
                 </td>

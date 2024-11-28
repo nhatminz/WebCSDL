@@ -192,8 +192,64 @@ tr:hover {
 }
 
 /* Form Styling */
-.form-container {
+.container {
     display: block;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container input, .container select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.container button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #27ae60;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Hai cột: label và input */
+    gap: 15px; /* Khoảng cách giữa các thành phần */
+    align-items: center;
+}
+
+label {
+    text-align: right; /* Canh phải cho label */
+    font-weight: bold;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Để input chiếm toàn bộ chiều ngang */
+    box-sizing: border-box;
+}
+
+.form-container {
+    display: none;
     flex-direction: column;
     gap: 10px;
 }

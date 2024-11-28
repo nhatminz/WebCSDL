@@ -57,11 +57,27 @@ public class StudentController {
         if (student == null) {
             throw new RuntimeException("Student not found with ID: " + id);
         }
+        StudentDto studentDto = toDto(student);
         model.addAttribute("student", student);
-        model.addAttribute("studentDto", new StudentDto());
+        model.addAttribute("studentDto", studentDto);
         model.addAttribute("majors", majorServiceImpl.getAllMajor());
         model.addAttribute("classes", schoolClassServiceImpl.getAllSchoolClass());
         return "updateStudentForm";
+    }
+
+    private static StudentDto toDto(Student student) {
+        StudentDto studentDto = new StudentDto();
+        studentDto.setId(student.getId());
+        studentDto.setFirstName(student.getFirstName());
+        studentDto.setLastName(student.getLastName());
+        studentDto.setDateOfBirth(student.getDateOfBirth().toString());
+        studentDto.setEmail(student.getEmail());
+        studentDto.setPhoneNumber(student.getPhoneNumber());
+        studentDto.setAddress(student.getAddress());
+        studentDto.setGpa(student.getGpa());
+        studentDto.setClassId(student.getStudentClass().getId());
+        studentDto.setMajorId(student.getMajor().getId());
+        return studentDto;
     }
 
     @PostMapping("/Students/save")

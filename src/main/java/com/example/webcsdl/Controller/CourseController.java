@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +46,8 @@ public class CourseController {
         courseDto.setCredits(course.getCredits());
         courseDto.setMajorName(course.getMajor().getMajorName());
         courseDto.setTeacherName(course.getTeacher().getFirstName() + ' ' + course.getTeacher().getLastName());
+        courseDto.setMajorId(course.getMajor().getId());
+        courseDto.setTeacherId(course.getTeacher().getId());
         return courseDto;
     }
 
@@ -58,6 +57,28 @@ public class CourseController {
         return "redirect:/Courses";
     }
 
+    @GetMapping("/Courses/update/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Course course = courseServiceImpl.getById(id);
+        if (course == null) {
+            throw new RuntimeException("Course not found with ID: " + id);
+        }
+        //hàm toDto dùng ở đây
+        CourseDto courseDto= toDto(course);
+        model.addAttribute("course",course);
+        // phải thêm dòng dto này vào
+        model.addAttribute("courseDto", courseDto);
+        model.addAttribute("majors", majorServiceImpl.getAllMajor());
+        model.addAttribute("teachers", teacherServiceImpl.getAllTeacher());
+        return "updateCourseForm";
+    }
+
+    @PostMapping("/Courses/save")
+    public String updateCourse(@ModelAttribute("courseDto") CourseDto courseDto) {
+        Course course = toEntity(courseDto);
+        courseServiceImpl.saveCourse(course);
+        return "redirect:/Courses";
+    }
     public Course toEntity(CourseDto courseDto) {
         Course course = new Course();
         course.setId(courseDto.getId());

@@ -20,7 +20,6 @@
     </div>
 </div>
 
-
 <div class="sidebar">
     <a href="Dashboard" class="menu-item">
         <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -66,8 +65,9 @@
     <!-- List Course Schedules Table -->
     <div id="courseSchedulesList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="searchInput" class="searchInput" placeholder="Search Course Schedule..."
+                   oninput="searchCourseSchedule()">
+            <button onclick="searchCourseSchedule()">Search</button>
         </div>
         <table id="courseSchedulesTable">
             <thead>
@@ -85,14 +85,14 @@
             <!-- Example Row -->
             <tr th:each="courseSchedule : ${courseSchedules}">
                 <td th:text="${courseSchedule.id}"></td>
-                <td th:text="${courseSchedule.course.getId()}"></td>
+                <td th:text="${courseSchedule.course.getCourseName()}"></td>
                 <td th:text="${courseSchedule.classroom.getId()}"></td>
                 <td th:text="${courseSchedule.dayOfWeek}"></td>
                 <td th:text="${courseSchedule.startTime}"></td>
                 <td th:text="${courseSchedule.endTime}"></td>
                 <td class="action-buttons">
-                    <button class="update-btn" th:onclick="'updatecourseSchedule(' + ${courseSchedule.id} + ')'">Update</button>
-                    <button class="delete-btn" th:onclick="'deletecourseSchedule(' + ${courseSchedule.id} + ')'">Delete</button>
+                    <a th:href="@{/CourseSchedule/update/{id}(id=${courseSchedule.id})}" class="update-btn">Update</a>
+                    <a th:href="@{/deleteCourseSchedule/{id}(id=${courseSchedule.id})}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             <!-- Repeat rows dynamically from database -->
@@ -144,13 +144,58 @@
         document.getElementById('addCourseScheduleForm').style.display = 'none';
         document.getElementById('courseSchedulesList').style.display = 'block';
     }
+
     function logout() {
         window.location.href = 'logout';
     }
+
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdown-menu');
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
+
+    function searchCourseSchedule() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        // Nếu trường tìm kiếm trống, tải lại toàn bộ dữ liệu
+        const queryUrl = searchTerm
+            ? `CourseSchedule/search?query=${encodeURIComponent(searchTerm)}`
+            : `CourseSchedule/all`;
+
+        fetch(queryUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#courseSchedulesTable tbody");
+                tableBody.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(courseSchedule => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${courseSchedule.id}</td>
+                        <td>${courseSchedule.courseName}</td>
+                        <td>${courseSchedule.classroomId}</td>
+                        <td>${courseSchedule.dayOfWeek}</td>
+                        <td>${courseSchedule.startTime}</td>
+                        <td>${courseSchedule.endTime}</td>
+                        <td class="action-buttons">
+                            <a href="/CourseSchedule/update/${courseSchedule.id}" class="update-btn">Update</a>
+                            <a href="/deleteCourseSchedule/${courseSchedule.id}" class="btn btn-danger">Delete</a>
+                        </td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="7">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching course schedules:", error);
+            });
+    }
+
 </script>
 </body>
 </html>

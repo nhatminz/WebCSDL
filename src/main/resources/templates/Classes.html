@@ -141,8 +141,8 @@
                             <td>${schoolClass.className}</td>
                             <td>${schoolClass.classDescription}</td>
                             <td class="action-buttons">
-                                <a th:href="@{/SchoolClass/update/{id}(id=${schoolClass.id})}" class="update-btn">Update</a>
-                                <a th:href="@{/deleteSchoolClass/{id}(id=${schoolClass.id})}" class="btn btn-danger">Delete</a>
+                            <a href="/SchoolClass/update/${schoolClass.id}" class="update-btn">Update</a>
+                            <a href="/deleteSchoolClass/${schoolClass.id}" class="btn btn-danger">Delete</a>
                             </td>
                         `;
                         tableBody.appendChild(row);

@@ -160,8 +160,8 @@
                     <td>${scholarship.amount}</td>
                     <td>${scholarship.studentId}</td>
                     <td class="action-buttons">
-                        <button class="update-btn" onclick="updateScholarship(${scholarship.id})">Update</button>
-                        <button class="delete-btn" onclick="deleteScholarship(${scholarship.id})">Delete</button>
+                    <a href="/Scholarship/update/${scholarship.id}" class="btn btn-primary">Update</a>
+                    <a href="/deleteScholarship/${scholarship.id}" class="btn btn-danger">Delete</a>
                     </td>
                     `;
                         tableBody.appendChild(row);

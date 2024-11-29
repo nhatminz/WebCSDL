@@ -67,8 +67,8 @@
     <!-- List Departments Table -->
     <div id="departmentList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchDepartments()">
+            <button onclick="searchDepartments()">Search</button>
         </div>
 
         <table id="departmentTable">
@@ -89,7 +89,7 @@
                 <td class="action-buttons">
                     <!-- B2: sửa đường dẫn ở đây-->
                     <a th:href="@{/Department/update/{id}(id=${department.id})}" class="update-btn">Update</a>
-                    <button class="delete-btn" th:onclick="'deleteDepartment(' + ${department.id} + ')'">Delete</button>
+                    <a th:href="@{/deleteDepartment/{id}(id=${department.id})}">Delete</a>
                 </td>
             </tr>
             </tbody>
@@ -133,7 +133,41 @@
     function logout() {
         window.location.href = 'logout';
     }
-</script>
+    function searchDepartments() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
 
+        fetch(`/Department/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#departmentTable tbody");
+                tableBody.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(department => {
+                        const row = document.createElement('tr');
+                        row.id = `row-${department.id}`;
+                        row.innerHTML = `
+                        <td>${department.id}</td>
+                        <td>${department.departmentName}</td>
+                        <td>${department.location}</td>
+                        <td class="action-buttons">
+                            <a href="/Department/update/${department.id}" class="btn btn-primary">Update</a>
+                            <a href="/deleteDepartment/${department.id}" class="btn btn-danger">Delete</a>
+                        </td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="4">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching departments:", error);
+            });
+    }
+
+</script>
 </body>
 </html>

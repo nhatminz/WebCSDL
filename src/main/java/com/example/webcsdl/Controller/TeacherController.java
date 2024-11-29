@@ -1,18 +1,15 @@
 package com.example.webcsdl.Controller;
 
-import com.example.webcsdl.Entity.Department;
-import com.example.webcsdl.Entity.Student;
-import com.example.webcsdl.Entity.Teacher;
-import com.example.webcsdl.Entity.TeacherDto;
+import com.example.webcsdl.Entity.*;
 import com.example.webcsdl.Service.DepartmentServiceImpl;
 import com.example.webcsdl.Service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class TeacherController {
@@ -77,6 +74,12 @@ public class TeacherController {
         teacherDto.setPhoneNumber(teacher.getPhoneNumber());
         teacherDto.setDepartmentId(teacher.getDepartment().getId());
         return teacherDto;
+    }
+    @GetMapping("/Teachers/search")
+    public ResponseEntity<List<TeacherDto>> searchTeachers(@RequestParam String query) {
+        List<Teacher> teachers = teacherServiceImpl.searchTeachers(query);
+        List<TeacherDto> teacherDtos = teachers.stream().map(this::toDto).toList();
+        return ResponseEntity.ok(teacherDtos);
     }
 
 }

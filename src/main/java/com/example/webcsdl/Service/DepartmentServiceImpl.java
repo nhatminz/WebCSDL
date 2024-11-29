@@ -2,6 +2,7 @@ package com.example.webcsdl.Service;
 
 import com.example.webcsdl.Entity.Department;
 import com.example.webcsdl.Entity.Major;
+import com.example.webcsdl.Entity.SchoolClass;
 import com.example.webcsdl.Repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,9 @@ public class DepartmentServiceImpl implements DepartmentServices {
     @Override
     public void deleteViaId(Long id) {
         departmentRepository.deleteById(id);
+    }
+
+    public List<Department> searchDepartments(String query) {
+        return departmentRepository.findByDepartmentNameContaining(query);
     }
 }

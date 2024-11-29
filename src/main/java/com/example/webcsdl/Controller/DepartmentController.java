@@ -2,19 +2,25 @@ package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.Department;
 import com.example.webcsdl.Entity.SchoolClass;
+import com.example.webcsdl.Entity.Teacher;
+import com.example.webcsdl.Entity.TeacherDto;
 import com.example.webcsdl.Service.DepartmentServiceImpl;
+import com.example.webcsdl.Service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class DepartmentController {
     @Autowired
     private DepartmentServiceImpl departmentServiceImpl;
+
+    @Autowired
+    private TeacherServiceImpl teacherServiceImpl;
 
     @GetMapping("/Department")
     public String Department(Model model) {
@@ -48,5 +54,15 @@ public class DepartmentController {
         return "redirect:/Department";
     }
 
+    @GetMapping("/deleteDepartment/{id}")
+    public String deleteDepartmentById(@PathVariable(value = "id") long id) {
+        departmentServiceImpl.deleteViaId(id);
+        return "redirect:/Department";
+    }
 
+    @GetMapping("/Department/search")
+    public ResponseEntity<List<Department>> searchDepartments(@RequestParam String query) {
+        List<Department> results = departmentServiceImpl.searchDepartments(query);
+        return ResponseEntity.ok(results);
+    }
 }

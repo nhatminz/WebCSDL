@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,8 +65,8 @@ public class CourseController {
             throw new RuntimeException("Course not found with ID: " + id);
         }
         //hàm toDto dùng ở đây
-        CourseDto courseDto= toDto(course);
-        model.addAttribute("course",course);
+        CourseDto courseDto = toDto(course);
+        model.addAttribute("course", course);
         // phải thêm dòng dto này vào
         model.addAttribute("courseDto", courseDto);
         model.addAttribute("majors", majorServiceImpl.getAllMajor());
@@ -79,6 +80,13 @@ public class CourseController {
         courseServiceImpl.saveCourse(course);
         return "redirect:/Courses";
     }
+
+    @GetMapping("/deleteCourse/{id}")
+    public String deleteCourseById(@PathVariable(value = "id") long id) {
+        courseServiceImpl.deleteViaId(id);
+        return "redirect:/Courses";
+    }
+
     public Course toEntity(CourseDto courseDto) {
         Course course = new Course();
         course.setId(courseDto.getId());

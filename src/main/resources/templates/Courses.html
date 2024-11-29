@@ -68,8 +68,8 @@
     <!-- List Courses Table -->
     <div id="coursesList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="searchInput" class="searchInput" placeholder="Search..." oninput="searchCourses()">
+            <button onclick="searchCourses()">Search</button>
         </div>
         <table id="coursesTable">
             <thead>
@@ -156,6 +156,44 @@
     function goBack() {
         document.getElementById('addCourseForm').style.display = 'none';
         document.getElementById('coursesList').style.display = 'block';
+    }
+
+    function searchCourses() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        fetch(`/Courses/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#coursesTable tbody");
+                tableBody.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(course => {
+                        const row = document.createElement('tr');
+                        row.id = `row-${course.id}`;
+                        row.innerHTML = `
+                    <td>${course.id}</td>
+                    <td>${course.courseName}</td>
+                    <td>${course.courseCode}</td>
+                    <td>${course.credits}</td>
+                    <td>${course.majorName}</td>
+                    <td>${course.teacherName}</td>
+                    <td class="action-buttons">
+                        <button class="update-btn" onclick="updateCourse(${course.id})">Update</button>
+                        <button class="delete-btn" onclick="deleteCourse(${course.id})">Delete</button>
+                    </td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="7">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching courses:", error);
+            });
     }
 
 </script>

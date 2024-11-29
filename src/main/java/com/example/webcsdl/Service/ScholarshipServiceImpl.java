@@ -1,7 +1,6 @@
 package com.example.webcsdl.Service;
 
 import com.example.webcsdl.Entity.Scholarship;
-import com.example.webcsdl.Entity.Student;
 import com.example.webcsdl.Repository.ScholarshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +16,12 @@ public class ScholarshipServiceImpl implements ScholarshipServices {
 
     @Override
     public List<Scholarship> getAllScholarship() {
-    return scholarshipRepository.findAll();
+        return scholarshipRepository.findAll();
     }
 
     @Override
     public void saveScholarship(Scholarship scholarship) {
-    scholarshipRepository.save(scholarship);
+        scholarshipRepository.save(scholarship);
     }
 
     @Override
@@ -40,6 +39,11 @@ public class ScholarshipServiceImpl implements ScholarshipServices {
 
     @Override
     public void deleteViaId(Long id) {
-    scholarshipRepository.deleteById(id);
+        scholarshipRepository.deleteById(id);
     }
+
+    public List<Scholarship> searchScholarships(String query) {
+        return scholarshipRepository.findByScholarshipNameContainingIgnoreCase(query);
+    }
+
 }

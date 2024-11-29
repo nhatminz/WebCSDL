@@ -87,7 +87,8 @@
                 <td th:text="${department.departmentName}"></td>
                 <td th:text="${department.location}"></td>
                 <td class="action-buttons">
-                    <button class="update-btn" th:onclick="'updateDepartment(' + ${department.id} + ')'">Update</button>
+                    <!-- B2: sửa đường dẫn ở đây-->
+                    <a th:href="@{/Department/update/{id}(id=${department.id})}" class="update-btn">Update</a>
                     <button class="delete-btn" th:onclick="'deleteDepartment(' + ${department.id} + ')'">Delete</button>
                 </td>
             </tr>

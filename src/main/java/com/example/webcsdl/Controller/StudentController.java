@@ -58,8 +58,10 @@ public class StudentController {
         if (student == null) {
             throw new RuntimeException("Student not found with ID: " + id);
         }
+        //hàm toDto dùng ở đây
         StudentDto studentDto = toDto(student);
         model.addAttribute("student", student);
+        // phải thêm dòng dto này vào
         model.addAttribute("studentDto", studentDto);
         model.addAttribute("majors", majorServiceImpl.getAllMajor());
         model.addAttribute("classes", schoolClassServiceImpl.getAllSchoolClass());

@@ -1,12 +1,14 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.Department;
+import com.example.webcsdl.Entity.SchoolClass;
 import com.example.webcsdl.Service.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -27,4 +29,24 @@ public class DepartmentController {
         departmentServiceImpl.saveDepartment(department);
         return "redirect:/Department";
     }
+
+    //b3: tạo hàm dướidđây
+    @GetMapping("/Department/update/{id}")
+    public String showUpdateDepartmentForm(@PathVariable("id") long id, Model model) {
+        // Biến để lấy thông tin department muốn sửa
+        Department department = departmentServiceImpl.getById(id);
+        if (department == null) {
+            throw new RuntimeException("Department not found");
+        }
+        model.addAttribute("department", department);
+        return "updateDepartmentForm";
+    }
+
+    @PostMapping("/Department/save")
+    public String updateDepartment(@ModelAttribute("department") Department department) {
+        departmentServiceImpl.saveDepartment(department);
+        return "redirect:/Department";
+    }
+
+
 }

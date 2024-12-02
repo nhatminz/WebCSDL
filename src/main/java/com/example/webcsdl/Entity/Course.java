@@ -39,6 +39,12 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<CourseSchedule> schedules = new ArrayList<>();
 
+    public Course() {}
+
+    public Course(Long id) {
+        this.id = id;
+    }
+
     // Helper methods
     public void addEnrollment(Enrollment enrollment) {
         enrollments.add(enrollment);

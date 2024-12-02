@@ -19,13 +19,13 @@ public class Enrollment {
     // Getter và Setter cho student
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("studentId")  // Ánh xạ với studentId trong EnrollmentId
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    @JoinColumn(name = "student_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Student student;
 
     // Getter và Setter cho course
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("courseId")   // Ánh xạ với courseId trong EnrollmentId
-    @JoinColumn(name = "course_id", insertable = false, updatable = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Course course;
 
     // Getter và Setter cho enrollmentDate

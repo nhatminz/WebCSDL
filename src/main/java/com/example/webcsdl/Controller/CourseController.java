@@ -33,10 +33,11 @@ public class CourseController {
     }
 
     @GetMapping("/Courses/search")
-    public ResponseEntity<List<CourseDto>> searchCourses(@RequestParam String query) {
-        List<Course> courses = courseServiceImpl.searchCourses(query);
-        List<CourseDto> courseDtos = courses.stream().map(this::toDto).collect(Collectors.toList());
-        return ResponseEntity.ok(courseDtos);
+    @ResponseBody
+    public List<CourseDto> searchCourses(@RequestParam(value = "query", required = false) String query,
+                                                         @RequestParam(value = "credits", required = false) Integer credit) {
+        List<Course> courses = courseServiceImpl.searchCourses(query, credit); // searchMajors là hàm tìm kiếm trong service
+        return courses.stream().map(this::toDto).toList();
     }
 
     private CourseDto toDto(Course course) {

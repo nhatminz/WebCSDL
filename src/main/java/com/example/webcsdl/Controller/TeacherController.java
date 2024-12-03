@@ -60,7 +60,7 @@ public class TeacherController {
         teacher.setEmail(teacherDto.getEmail());
         teacher.setPhoneNumber(teacherDto.getPhoneNumber());
 
-        Department department = departmentServiceImpl.getById(teacherDto.getDepartmentId());
+        Department department = departmentServiceImpl.getById(teacherDto.getDepartment().getId());
         teacher.setDepartment(department);
         return teacher;
     }
@@ -72,7 +72,7 @@ public class TeacherController {
         teacherDto.setLastName(teacher.getLastName());
         teacherDto.setEmail(teacher.getEmail());
         teacherDto.setPhoneNumber(teacher.getPhoneNumber());
-        teacherDto.setDepartmentId(teacher.getDepartment().getId());
+        teacherDto.setDepartment(teacher.getDepartment());
         return teacherDto;
     }
     @GetMapping("/Teachers/search")
@@ -81,5 +81,4 @@ public class TeacherController {
         List<TeacherDto> teacherDtos = teachers.stream().map(this::toDto).toList();
         return ResponseEntity.ok(teacherDtos);
     }
-
 }

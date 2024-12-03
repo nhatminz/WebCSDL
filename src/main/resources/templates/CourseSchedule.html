@@ -65,9 +65,8 @@
     <!-- List Course Schedules Table -->
     <div id="courseSchedulesList">
         <div class="search-section">
-            <input type="text" id="searchInput" class="searchInput" placeholder="Search Course Schedule..."
-                   oninput="searchCourseSchedule()">
-            <button onclick="searchCourseSchedule()">Search</button>
+            <input type="text" id="searchInput" placeholder="Search Course Schedule..." oninput="searchCourseSchedules()">
+            <button onclick="searchCourseSchedules()">Search</button>
         </div>
         <table id="courseSchedulesTable">
             <thead>
@@ -154,40 +153,36 @@
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
-    function searchCourseSchedule() {
+
+    function searchCourseSchedules() {
         const searchTerm = document.getElementById('searchInput').value.trim();
 
-        // Nếu trường tìm kiếm trống, tải lại toàn bộ dữ liệu
-        const queryUrl = searchTerm
-            ? `CourseSchedule/search?query=${encodeURIComponent(searchTerm)}`
-            : `CourseSchedule/all`;
-
-        fetch(queryUrl)
+        fetch(`/CourseSchedule/search?query=${encodeURIComponent(searchTerm)}`)
             .then(response => response.json())
             .then(data => {
                 const tableBody = document.querySelector("#courseSchedulesTable tbody");
-                tableBody.innerHTML = '';
+                tableBody.innerHTML = ''; // Xóa nội dung cũ
 
                 if (data.length > 0) {
-                    data.forEach(courseSchedule => {
+                    data.forEach(schedule => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                        <td>${courseSchedule.id}</td>
-                        <td>${courseSchedule.courseName}</td>
-                        <td>${courseSchedule.classroomId}</td>
-                        <td>${courseSchedule.dayOfWeek}</td>
-                        <td>${courseSchedule.startTime}</td>
-                        <td>${courseSchedule.endTime}</td>
+                        <td>${schedule.id}</td>
+                        <td>${schedule.courseName}</td>
+                        <td>${schedule.classroomId}</td>
+                        <td>${schedule.dayOfWeek}</td>
+                        <td>${schedule.startTime}</td>
+                        <td>${schedule.endTime}</td>
                         <td class="action-buttons">
-                            <a href="/CourseSchedule/update/${courseSchedule.id}" class="update-btn">Update</a>
-                            <a href="/deleteCourseSchedule/${courseSchedule.id}" class="btn btn-danger">Delete</a>
+                            <a href="/CourseSchedules/update/${schedule.id}" class="update-btn">Update</a>
+                            <a href="/deleteCourseSchedule/${schedule.id}" class="btn btn-danger">Delete</a>
                         </td>
                     `;
                         tableBody.appendChild(row);
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="7">No results found</td>`;
+                    row.innerHTML = `<td colspan="6">No results found</td>`;
                     tableBody.appendChild(row);
                 }
             })
@@ -195,6 +190,7 @@
                 console.error("Error searching course schedules:", error);
             });
     }
+
 
 </script>
 </body>

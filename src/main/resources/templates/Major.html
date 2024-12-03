@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Management System - Majors</title>
     <link rel="stylesheet" href="/css/main.css"></head>
+<script src = "/js/major.js"defer>
+</script>
+<script src = "/js/content.js" defer></script>
 <body>
 <!-- Top Navbar -->
 <div class="navbar">
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -121,62 +124,5 @@
         </form>
     </div>
 </div>
-
-<script>
-    function showAddMajorForm() {
-        document.getElementById('addMajorForm').style.display = 'block';
-        document.getElementById('majorsList').style.display = 'none';
-    }
-
-    function backToTable() {
-        document.getElementById('addMajorForm').style.display = 'none';
-        document.getElementById('majorsList').style.display = 'block';
-    }
-
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-    function logout() {
-        window.location.href = 'logout';
-    }
-
-    function searchMajors() {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-
-        fetch(`/Majors/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector("#majorsTable tbody");
-                tableBody.innerHTML = ''; // Xóa nội dung cũ
-
-                if (data.length > 0) {
-                    data.forEach(major => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                        <td>${major.id}</td>
-                        <td>${major.majorName}</td>
-                        <td>${major.description}</td>
-                        <td>${major.departmentName || 'N/A'}</td>
-                        <td>
-                            <a href="/Majors/update/${major.id}" class="btn btn-primary">Update</a>
-                            <a href="/deleteMajor/${major.id}" class="btn btn-danger">Delete</a>
-                        </td>
-                    `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5">No results found</td>`;
-                    tableBody.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error("Error searching majors:", error);
-            });
-    }
-
-
-</script>
 </body>
 </html>

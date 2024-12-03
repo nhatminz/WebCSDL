@@ -12,7 +12,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -130,85 +130,8 @@
     </div>
 </div>
 
-<script>
-    function showAddEnrollmentForm() {
-        document.getElementById('addEnrollmentForm').style.display = 'block';
-        document.getElementById('enrollmentList').style.display = 'none';
-    }
-    function logout() {
-        window.location.href = 'logout';
-    }
-    function backToTable() {
-        document.getElementById('addEnrollmentForm').style.display = 'none';
-        document.getElementById('enrollmentList').style.display = 'block';
-    }
-
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function searchEnrollments() {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-
-        fetch(`/Enrollment/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector("#enrollmentsTable tbody");
-                tableBody.innerHTML = ''; // Xóa nội dung cũ
-
-                if (data.length > 0) {
-                    data.forEach(enrollment => {
-                        const row = document.createElement('tr');
-                        row.id = `row-${enrollment.studentId}-${enrollment.courseId}`;
-                        row.innerHTML = `
-                        <td>${enrollment.studentId}</td>
-                        <td>${enrollment.studentName}</td>
-                        <td>${enrollment.courseId}</td>
-                        <td>${enrollment.courseName}</td>
-                        <td>${enrollment.enrollmentDate}</td>
-                        <td>${enrollment.grade || 'N/A'}</td>
-                        <td class="action-buttons">
-                            <a href="/Enrollments/update/${enrollment.studentId}/${enrollment.courseId}" class="update-btn">Update</a>
-                            <a href="/deleteEnrollment/${enrollment.studentId}/${enrollment.courseId}" class="btn btn-danger">Delete</a>
-                        </td>
-                    `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="7">No results found</td>`;
-                    tableBody.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error("Error searching enrollments:", error);
-            });
-    }
-
-
-    // function deleteEnrollment(studentId, courseId) {
-    //     const deleteForm = document.getElementById('deleteEnrollmentForm');
-    //     deleteForm.style.display = 'block';
-    //     document.getElementById('deleteStudentIdInput').value = studentId;
-    //     document.getElementById('deleteCourseIdInput').value = courseId;
-    //     document.getElementById('enrollmentList').style.display = 'none';
-    // }
-    //
-    // function cancelDelete() {
-    //     const deleteForm = document.getElementById('deleteEnrollmentForm');
-    //     deleteForm.style.display = 'none';
-    //     document.getElementById('enrollmentList').style.display = 'block';
-    // }
-    //
-    //
-    // function updateEnrollment(studentId, courseId) {
-    //     const updateForm = document.getElementById('updateEnrollmentForm');
-    //     updateForm.style.display = 'block';
-    //     document.getElementById('studentIdInput').value = studentId;
-    //     document.getElementById('courseIdInput').value = courseId;
-    //     document.getElementById('enrollmentList').style.display = 'none';
-    // }
+<script src = "/js/enrollment.js"defer>
 </script>
+<script src = "/js/content.js"defer></script>
 </body>
 </html>

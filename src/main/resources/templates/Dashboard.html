@@ -214,7 +214,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <!-- Dropdown Menu -->
     <div id="dropdown-menu" class="dropdown-menu">
@@ -306,10 +306,6 @@
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
-    function logout() {
-        window.location.href = 'login';
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -319,26 +315,44 @@
                 center: 'title',
                 end: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            events: [
-                {
-                    title: 'Meeting',
-                    start: '2024-11-01',
-                    end: '2024-11-02',
-                },
-                {
-                    title: 'Exam',
-                    start: '2024-11-05',
-                },
-                {
-                    title: 'Holiday',
-                    start: '2024-11-11',
-                    end: '2024-11-12',
-                },
-            ]
         });
 
         calendar.render();
     });
+
+    function logout() {
+        fetch('/logout', { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'req/login';
+                } else {
+                    console.error('Đăng xuất không thành công');
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi đăng xuất:', error);
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Gọi API để lấy thông tin username
+        fetch("/current-user")
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // API trả về chuỗi username
+                } else {
+                    console.error("Failed to fetch username");
+                    return "Guest"; // Hiển thị mặc định nếu lỗi
+                }
+            })
+            .then(username => {
+                document.getElementById("username").textContent = username;
+            })
+            .catch(error => {
+                console.error("Error fetching username:", error);
+            });
+    });
+
 </script>
 </body>
 </html>

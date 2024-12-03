@@ -13,7 +13,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -64,6 +64,7 @@
 
     <!-- List Courses Table -->
     <div id="coursesList">
+        <button id="sortButtonCredits" onclick="sortTableByCredits()">Sort</button>
         <div class="search-section">
             <input type="text" id="searchInput" class="searchInput" placeholder="Search..." oninput="searchCourses()">
             <button onclick="searchCourses()">Search</button>
@@ -133,66 +134,8 @@
     </div>
 </div>
 
-<script>
-    // Dropdown toggle function
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function logout() {
-        window.location.href = 'logout';
-    }
-
-    // Show the add course form
-    function showAddCourseForm() {
-        document.getElementById('addCourseForm').style.display = 'flex';
-        document.getElementById('coursesList').style.display = 'none';
-    }
-
-    function goBack() {
-        document.getElementById('addCourseForm').style.display = 'none';
-        document.getElementById('coursesList').style.display = 'block';
-    }
-
-    function searchCourses() {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-
-        fetch(`/Courses/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector("#coursesTable tbody");
-                tableBody.innerHTML = '';
-
-                if (data.length > 0) {
-                    data.forEach(course => {
-                        const row = document.createElement('tr');
-                        row.id = `row-${course.id}`;
-                        row.innerHTML = `
-                    <td>${course.id}</td>
-                    <td>${course.courseName}</td>
-                    <td>${course.courseCode}</td>
-                    <td>${course.credits}</td>
-                    <td>${course.majorName}</td>
-                    <td>${course.teacherName}</td>
-                    <td class="action-buttons">
-                        <a href="/Courses/update/${course.id}" class="update-btn">Update</a>
-                    <a href="/deleteCourse/${course.id}" class="btn btn-danger">Delete</a>
-                </td>
-                `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="7">No results found</td>`;
-                    tableBody.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error("Error searching courses:", error);
-            });
-    }
-
+<script src ="/js/course.js"defer>
 </script>
+<script src ="/js/content.js" defer></script>
 </body>
 </html>

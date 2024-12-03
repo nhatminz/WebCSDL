@@ -11,7 +11,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -38,7 +38,7 @@
         <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
 
         <label for="departmentId">Department</label>
-        <select id="departmentId" th:field="*{departmentId}" required>
+        <select id="departmentId" th:field="*{department}" required>
             <option th:each="dp : ${departments}" th:value="${dp.id}" th:text="${dp.departmentName}"
                     th:selected="${teacher.department.id == dp.id}"></option>
         </select>
@@ -50,4 +50,5 @@
     </form>
 </div>
 </body>
+<script src = "/js/teachers.js" defer></script>
 </html>

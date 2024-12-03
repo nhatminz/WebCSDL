@@ -1,6 +1,7 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
+import com.example.webcsdl.Service.CourseServiceImpl;
 import com.example.webcsdl.Service.DepartmentServiceImpl;
 import com.example.webcsdl.Service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class TeacherController {
 
     @Autowired
     private TeacherServiceImpl teacherServiceImpl;
+
+    @Autowired
+    private CourseServiceImpl courseServiceImpl;
 
     @GetMapping("/Teachers")
     public String showTeacherManagement(Model model) {
@@ -80,5 +84,12 @@ public class TeacherController {
         List<Teacher> teachers = teacherServiceImpl.searchTeachers(query);
         List<TeacherDto> teacherDtos = teachers.stream().map(this::toDto).toList();
         return ResponseEntity.ok(teacherDtos);
+    }
+
+    @GetMapping("/deleteTeacher/{id}")
+    public String deleteTeacherById(@PathVariable(value = "id") long id) {
+        teacherServiceImpl.deleteViaId(id);
+        courseServiceImpl.deleteViaId(id);
+        return "redirect:/Teachers";
     }
 }

@@ -105,30 +105,30 @@
         <h2>Add Course Schedule</h2>
         <form th:action="@{/CourseSchedules/add}" th:object="${courseSchedule}" method="POST">
             <label>ID:</label>
-            <input type="text" th:field="*{id}" required><br>
+            <input type="text" th:field="*{id}" required>
 
             <label>Course:</label>
             <select th:field="*{courseId}" required>
                 <option th:each="cr : ${courses}" th:value="${cr.id}" th:text="${cr.courseName}"></option>
-            </select><br>
+            </select>
 
             <label>Classroom:</label>
             <select th:field="*{classroomId}" required>
                 <option th:each="cl : ${classrooms}" th:value="${cl.id}" th:text="${cl.roomNumber}"></option>
-            </select><br>
+            </select>
 
             <label>Day of Week:</label>
-            <input type="text" th:field="*{dayOfWeek}" required><br>
+            <input type="text" th:field="*{dayOfWeek}" required>
 
             <label>Start:</label>
-            <input type="text" th:field="*{startTime}" required><br>
+            <input type="text" th:field="*{startTime}" required>
 
             <label>End:</label>
-            <input type="text" th:field="*{endTime}" required><br>
+            <input type="text" th:field="*{endTime}" required>
 
             <div class="action-buttons">
-                <button onclick="submitStudent()">Submit</button>
                 <button onclick="backToTable()">Back</button>
+                <button text="submit">Submit</button>
             </div>
         </form>
     </div>

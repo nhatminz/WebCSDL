@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface SchoolClassRepository extends JpaRepository<SchoolClass, Long> {
     List<SchoolClass> findByClassNameContainingOrClassDescriptionContaining(String className, String classDescription);
+    long count();
 }

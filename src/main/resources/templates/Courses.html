@@ -85,7 +85,7 @@
                 <td th:text="${course.courseCode}"></td>
                 <td th:text="${course.credits}"></td>
                 <td th:text="${course.major.getMajorName()}"></td>
-                <td th:text="${course.teacher.getFirstName()+ course.teacher.getLastName()}"></td>
+                <td th:text="${course.teacher.getFirstName() + ' '+ course.teacher.getLastName()}"></td>
                 <td class="action-buttons">
                     <a th:href="@{/Courses/update/{id}(id=${course.id})}" class="update-btn">Update</a>
                     <a th:href="@{/deleteCourse/{id}(id=${course.id})}" class="btn btn-danger">Delete</a>

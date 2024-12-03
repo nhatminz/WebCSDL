@@ -9,7 +9,7 @@ function showAddCourseForm() {
 }
 
 function searchCourses() {
-    const searchTerm = document.getElementById('searchInput').value.trim();
+    const searchTerm = document.getElementById('searchCourseInput').value.trim();
 
     fetch(`/Courses/search?query=${encodeURIComponent(searchTerm)}`)
         .then(response => response.json())
@@ -20,7 +20,7 @@ function searchCourses() {
             if (data.length > 0) {
                 data.forEach(course => {
                     const row = document.createElement('tr');
-                    row.id = `row-${course.id}`;
+                    // row.id = `row-${course.id}`;
                     row.innerHTML = `
                     <td>${course.id}</td>
                     <td>${course.courseName}</td>

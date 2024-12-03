@@ -10,4 +10,5 @@ public interface  CourseServices {
     void saveCourse(Course course);
     Course getById(Long id);
     void deleteViaId(Long id);
+    List<Course> searchCourses(String keyword, Integer credits);
 }

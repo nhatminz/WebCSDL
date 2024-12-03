@@ -35,8 +35,9 @@ public class CourseServiceImpl implements CourseServices {
         return cou;
     }
 
-    public List<Course> searchCourses(String query) {
-        return courseRepository.findByCourseNameContainingIgnoreCase(query);
+    @Override
+    public List<Course> searchCourses(String keyword, Integer credits) {
+        return courseRepository.searchCourses(keyword, credits);
     }
 
     @Override

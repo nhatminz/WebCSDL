@@ -10,28 +10,25 @@ function backToScholarshipsList() {
 
 function searchScholarships() {
     const searchTerm = document.getElementById('searchInput').value.trim();
-    // if (!searchTerm) {
-    //     return;
-    // }
-    fetch(`/Scholarship/search?query=${encodeURIComponent(searchTerm)}`)
+
+    fetch(`/Scholarships/search?query=${encodeURIComponent(searchTerm)}`)
         .then(response => response.json())
         .then(data => {
             const tableBody = document.querySelector("#scholarshipsTable tbody");
-            tableBody.innerHTML = '';
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
 
             if (data.length > 0) {
                 data.forEach(scholarship => {
                     const row = document.createElement('tr');
-                    row.id = `row-${scholarship.id}`;
                     row.innerHTML = `
-                    <td>${scholarship.id}</td>
-                    <td>${scholarship.scholarshipName}</td>
-                    <td>${scholarship.amount}</td>
-                    <td>${scholarship.studentId}</td>
-                    <td class="action-buttons">
-                    <a href="/Scholarship/update/${scholarship.id}" class="btn btn-primary">Update</a>
-                    <a href="/deleteScholarship/${scholarship.id}" class="btn btn-danger">Delete</a>
-                    </td>
+                        <td>${scholarship.id}</td>
+                        <td>${scholarship.scholarshipName}</td>
+                        <td>${scholarship.amount}</td>
+                        <td>${scholarship.studentName || 'N/A'}</td>
+                        <td>
+                            <a href="/Scholarships/update/${scholarship.id}" class="btn btn-primary">Update</a>
+                            <a href="/deleteScholarship/${scholarship.id}" class="btn btn-danger">Delete</a>
+                        </td>
                     `;
                     tableBody.appendChild(row);
                 });

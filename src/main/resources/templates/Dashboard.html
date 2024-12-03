@@ -218,7 +218,6 @@
     </div>
     <!-- Dropdown Menu -->
     <div id="dropdown-menu" class="dropdown-menu">
-        <a href="Profile.html">Profile</a>
         <a href="#" onclick="logout()">Logout</a>
     </div>
 </div>
@@ -253,9 +252,6 @@
     </a>
     <a href="Classes" class="menu-item">
         <i class="fas fa-chalkboard-teacher"></i> Classes
-    </a>
-    <a href="Settings" class="menu-item">
-        <i class="fas fa-cogs"></i> Settings
     </a>
 </div>
 <!-- Main Content -->
@@ -335,14 +331,13 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        // Gọi API để lấy thông tin username
         fetch("/current-user")
             .then(response => {
                 if (response.ok) {
-                    return response.text(); // API trả về chuỗi username
+                    return response.text();
                 } else {
                     console.error("Failed to fetch username");
-                    return "Guest"; // Hiển thị mặc định nếu lỗi
+                    return "Guest";
                 }
             })
             .then(username => {
@@ -352,7 +347,6 @@
                 console.error("Error fetching username:", error);
             });
     });
-
 </script>
 </body>
 </html>

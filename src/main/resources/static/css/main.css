@@ -193,15 +193,8 @@ tr:hover {
 
 /* Form Styling */
 .container {
-    display: block;
-    flex-direction: column;
-    gap: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
     max-width: 500px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
@@ -232,15 +225,6 @@ tr:hover {
     background-color: #27ae60;
 }
 
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 form {
     display: grid;
     grid-template-columns: auto 1fr; /* Hai cột: label và input */
@@ -261,31 +245,32 @@ input {
     box-sizing: border-box;
 }
 
-.form-container {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
+/* From Uiverse.io by shadowmurphy */
+.input {
+    border: 2px solid transparent;
+    width: 15em;
+    height: 2.5em;
+    padding-left: 0.8em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
 }
 
-.form-container input, .form-container select {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
+.input:hover,
+.input:focus {
+    border: 2px solid #4A9DEC;
+    box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+    background-color: white;
 }
 
-.form-container button {
-    padding: 10px 20px;
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.form-container button:hover {
-    background-color: #27ae60;
+.action-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    gap: 5px;
 }
 
 .action-buttons button {
@@ -314,50 +299,7 @@ input {
     background-color: #c0392b;
 }
 
-.form-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-form {
-    display: grid;
-    grid-template-columns: auto 1fr; /* Hai cột: label và input */
-    gap: 15px; /* Khoảng cách giữa các thành phần */
-    align-items: center;
-}
-
-label {
-    text-align: right; /* Canh phải cho label */
-    font-weight: bold;
-}
-
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%; /* Để input chiếm toàn bộ chiều ngang */
-    box-sizing: border-box;
-}
-
-.action-buttons {
-    grid-column: span 2;
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 20px;
-    gap: 5px;
-}
-
-.action-button {
-    grid-column: span 2;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
+/* Button Styling */
 button {
     padding: 10px 20px;
     border: none;

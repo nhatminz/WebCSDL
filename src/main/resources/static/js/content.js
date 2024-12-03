@@ -34,3 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error fetching username:", error);
         });
 });
+
+function loadRandomAvatar() {
+    fetch('https://randomuser.me/api/')
+        .then(response => response.json())
+        .then(data => {
+            const avatarImage = data.results[0].picture.large;
+            document.getElementById('avatar').src = avatarImage;
+        })
+        .catch(error => {
+            console.error('Error loading avatar:', error);
+        });
+}
+
+// Call the loadRandomAvatar function when the page loads
+window.onload = loadRandomAvatar;

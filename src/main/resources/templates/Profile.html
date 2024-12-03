@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - School Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 900px;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #34495e;
+    }
+
+    .profile-header h2 {
+      margin-top: 15px;
+      font-size: 24px;
+      color: #34495e;
+    }
+
+    .profile-info {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-info .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .profile-info .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-item span {
+      font-size: 16px;
+      color: #2c3e50;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .action-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-buttons .update-btn {
+      background-color: #3498db;
+    }
+
+    .action-buttons .change-password-btn {
+      background-color: #e74c3c;
+    }
+
+    .action-buttons button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+<div class="profile-container">
+  <div class="profile-header">
+    <!-- Avatar Image from Random User API -->
+    <img id="avatar" src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Avatar">
+    <h2 id="username">John Doe</h2>
+  </div>
+
+  <div class="profile-info">
+    <div class="info-item">
+      <span>Email:</span>
+      <span id="email">john.doe@example.com</span>
+    </div>
+    <div class="info-item">
+      <span>Phone:</span>
+      <span id="phone">+1 (234) 567-890</span>
+    </div>
+    <div class="info-item">
+      <span>Role:</span>
+      <span id="role">Admin</span>
+    </div>
+    <div class="info-item">
+      <span>Department:</span>
+      <span id="department">Computer Science</span>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="update-btn" onclick="updateProfile()">Update Profile</button>
+    <button class="change-password-btn" onclick="changePassword()">Change Password</button>
+  </div>
+</div>
+
+<script>
+  // Function to update profile
+  function updateProfile() {
+    alert('Redirecting to update profile page...');
+    window.location.href = 'updateProfile.html';
+  }
+
+  // Function to change password
+  function changePassword() {
+    alert('Redirecting to change password page...');
+    window.location.href = 'changePassword.html';
+  }
+
+  // Load a new random avatar image on page load
+  function loadRandomAvatar() {
+    fetch('https://randomuser.me/api/')
+            .then(response => response.json())
+            .then(data => {
+              const avatarImage = data.results[0].picture.large;
+              document.getElementById('avatar').src = avatarImage;
+            })
+            .catch(error => {
+              console.error('Error loading avatar:', error);
+            });
+  }
+
+  // Call the loadRandomAvatar function when the page loads
+  window.onload = loadRandomAvatar;
+</script>
+</body>
+</html>

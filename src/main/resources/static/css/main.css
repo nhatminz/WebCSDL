@@ -313,3 +313,43 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.form-container {
+    width: fit-content;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    width: 150px;
+    font-weight: bold;
+    margin-right: 10px; /* Khoảng cách giữa label và input */
+}
+
+.form-row input[type="text"],
+.form-row select {
+    width: calc(100% - 160px); /* Đảm bảo input/ select chiếm phần còn lại của dòng */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

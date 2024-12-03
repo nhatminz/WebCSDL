@@ -77,13 +77,8 @@ public class TeacherController {
         teacherDto.setEmail(teacher.getEmail());
         teacherDto.setPhoneNumber(teacher.getPhoneNumber());
         teacherDto.setDepartment(teacher.getDepartment());
+        teacherDto.setDepartmentName(teacher.getDepartment().getDepartmentName());
         return teacherDto;
-    }
-    @GetMapping("/Teachers/search")
-    public ResponseEntity<List<TeacherDto>> searchTeachers(@RequestParam String query) {
-        List<Teacher> teachers = teacherServiceImpl.searchTeachers(query);
-        List<TeacherDto> teacherDtos = teachers.stream().map(this::toDto).toList();
-        return ResponseEntity.ok(teacherDtos);
     }
 
     @GetMapping("/deleteTeacher/{id}")
@@ -91,5 +86,12 @@ public class TeacherController {
         teacherServiceImpl.deleteViaId(id);
         courseServiceImpl.deleteViaId(id);
         return "redirect:/Teachers";
+    }
+
+    @GetMapping("/Teachers/search")
+    @ResponseBody
+    public List<TeacherDto> searchTeachers(@RequestParam("query") String query) {
+        List<Teacher> teachers = teacherServiceImpl.searchTeachers(query);
+        return teachers.stream().map(this::toDto).toList();
     }
 }

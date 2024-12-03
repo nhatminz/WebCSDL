@@ -39,7 +39,7 @@ public class Teacher {
 
     @Setter
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 

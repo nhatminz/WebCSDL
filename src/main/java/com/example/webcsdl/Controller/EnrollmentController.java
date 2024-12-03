@@ -8,12 +8,13 @@ import com.example.webcsdl.Service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class EnrollmentController {
@@ -23,8 +24,7 @@ public class EnrollmentController {
     private CourseServiceImpl courseServiceImpl;
     @Autowired
     private StudentServiceImpl studentServiceImpl;
-//    @Autowired
-//    public EnrollmentServices enrollmentServices;
+
     @GetMapping("/Enrollment")
     public String showEnrollmentManagement(Model model) {
         model.addAttribute("enrollments", enrollmentServiceImpl.getAllEnrollments());
@@ -39,6 +39,46 @@ public class EnrollmentController {
         enrollmentServiceImpl.saveEnrollment(toEntity(enrollmentDto));
         return "redirect:/Enrollment";
     }
+
+    @GetMapping("/Enrollments/update/{studentId}/{courseId}")
+    public String showUpdateForm(@PathVariable("studentId") Long studentId, @PathVariable("courseId") Long courseId, Model model) {
+        Enrollment enrollment = enrollmentServiceImpl.getById(studentId, courseId);
+        if (enrollment == null) {
+            throw new RuntimeException("Enrollment not found");
+        }
+        EnrollmentDto enrollmentDto = toDto(enrollment);
+        model.addAttribute("enrollment", enrollment);
+        model.addAttribute("enrollmentDto", enrollmentDto);
+        model.addAttribute("courses", courseServiceImpl.getAllCourse());
+        model.addAttribute("students", studentServiceImpl.getAllStudent());
+        return "updateEnrollmentForm";
+    }
+
+    @PostMapping("/Enrollments/save")
+    public String updateEnrollment(@ModelAttribute("enrollmentDto") EnrollmentDto enrollmentDto) {
+        enrollmentServiceImpl.saveEnrollment(toEntity(enrollmentDto));
+        return "redirect:/Enrollment";
+    }
+
+    @GetMapping("/deleteEnrollment/{studentId}/{courseId}")
+    public String deleteEnrollment(@PathVariable("studentId") Long studentId, @PathVariable Long courseId, RedirectAttributes redirectAttributes) {
+        try {
+            EnrollmentId enrollmentId = new EnrollmentId(studentId, courseId);
+            enrollmentServiceImpl.deleteViaId(enrollmentId);
+            redirectAttributes.addFlashAttribute("message", "Enrollment deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete enrollment");
+        }
+        return "redirect:/Enrollment";
+    }
+
+    @GetMapping("/Enrollment/search")
+    @ResponseBody
+    public List<EnrollmentDto> searchEnrollments(@RequestParam("query") String keyword) {
+        List<Enrollment> enrollments = enrollmentServiceImpl.searchEnrollments(keyword);
+        return enrollments.stream().map(this::toDto).toList();
+    }
+
 
     public Enrollment toEntity(EnrollmentDto enrollmentDto) {
         Enrollment enrollment = new Enrollment();
@@ -55,4 +95,14 @@ public class EnrollmentController {
         return enrollment;
     }
 
+    private EnrollmentDto toDto(Enrollment enrollment) {
+        EnrollmentDto enrollmentDto = new EnrollmentDto();
+        enrollmentDto.setStudentId(enrollment.getId().getStudentId());
+        enrollmentDto.setCourseId(enrollment.getId().getCourseId());
+        enrollmentDto.setStudentName(enrollment.getStudent().getFirstName() + " " + enrollment.getStudent().getLastName());
+        enrollmentDto.setGrade(enrollment.getGrade());
+        enrollmentDto.setCourseName(enrollment.getCourse().getCourseName());
+        enrollmentDto.setEnrollmentDate(enrollment.getEnrollmentDate().toString());
+        return enrollmentDto;
+    }
 }

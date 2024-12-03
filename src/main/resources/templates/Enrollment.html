@@ -66,8 +66,11 @@
     <!-- Enrollment List Table -->
     <div id="enrollmentList">
         <div class="search-section">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="Search Enrollment..." oninput="searchEnrollments()">
+                <button onclick="searchEnrollments()">Search</button>
+            </div>
+
         </div>
         <table id="enrollmentsTable">
             <thead>
@@ -91,14 +94,8 @@
                 <td th:text="${enrollment.enrollmentDate}"></td>
                 <td th:text="${enrollment.grade}"></td>
                 <td class="action-buttons">
-                    <button class="update-btn"
-                            onclick="updateEnrollment('${enrollment.id.studentId}', '${enrollment.Id.courseId}')">
-                        Update
-                    </button>
-                    <button class="delete-btn"
-                            onclick="deleteEnrollment('${enrollment.id.studentId}', '${enrollment.id.courseId}')">
-                        Delete
-                    </button>
+                    <a th:href="@{/Enrollments/update/{studentId}/{courseId}(studentId=${enrollment.id.studentId}, courseId=${enrollment.id.courseId})}" class="update-btn">Update</a>
+                    <a th:href="@{/deleteEnrollment/{studentId}/{courseId}(studentId=${enrollment.id.studentId}, courseId=${enrollment.id.courseId})}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             </tbody>
@@ -107,7 +104,7 @@
 
     <!-- Add Enrollment Form -->
     <div class="form-container" id="addEnrollmentForm">
-        <h2>Add Enrollment</h2>
+        <h3>Add Enrollment</h3>
         <form th:action="@{/Enrollments/add}" th:object="${enrollment}" method="POST">
             <label>Student:</label>
             <select name="studentId" required>
@@ -123,7 +120,7 @@
             <input type="date" th:field="*{enrollmentDate}" required>
 
             <label>Grade:</label>
-            <input type="number" th:field="*{grade}" step="0.01" required>
+            <input type="number" th:field="*{grade}" step="0.01">
 
             <div class="action-buttons">
                 <button type="submit">Submit</button>
@@ -151,28 +148,67 @@
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
-    function deleteEnrollment(studentId, courseId) {
-        const deleteForm = document.getElementById('deleteEnrollmentForm');
-        deleteForm.style.display = 'block';
-        document.getElementById('deleteStudentIdInput').value = studentId;
-        document.getElementById('deleteCourseIdInput').value = courseId;
-        document.getElementById('enrollmentList').style.display = 'none';
+    function searchEnrollments() {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        fetch(`/Enrollment/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#enrollmentsTable tbody");
+                tableBody.innerHTML = ''; // Xóa nội dung cũ
+
+                if (data.length > 0) {
+                    data.forEach(enrollment => {
+                        const row = document.createElement('tr');
+                        row.id = `row-${enrollment.studentId}-${enrollment.courseId}`;
+                        row.innerHTML = `
+                        <td>${enrollment.studentId}</td>
+                        <td>${enrollment.studentName}</td>
+                        <td>${enrollment.courseId}</td>
+                        <td>${enrollment.courseName}</td>
+                        <td>${enrollment.enrollmentDate}</td>
+                        <td>${enrollment.grade || 'N/A'}</td>
+                        <td class="action-buttons">
+                            <a href="/Enrollments/update/${enrollment.studentId}/${enrollment.courseId}" class="update-btn">Update</a>
+                            <a href="/deleteEnrollment/${enrollment.studentId}/${enrollment.courseId}" class="btn btn-danger">Delete</a>
+                        </td>
+                    `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="7">No results found</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error("Error searching enrollments:", error);
+            });
     }
 
-    function cancelDelete() {
-        const deleteForm = document.getElementById('deleteEnrollmentForm');
-        deleteForm.style.display = 'none';
-        document.getElementById('enrollmentList').style.display = 'block';
-    }
 
-
-    function updateEnrollment(studentId, courseId) {
-        const updateForm = document.getElementById('updateEnrollmentForm');
-        updateForm.style.display = 'block';
-        document.getElementById('studentIdInput').value = studentId;
-        document.getElementById('courseIdInput').value = courseId;
-        document.getElementById('enrollmentList').style.display = 'none';
-    }
+    // function deleteEnrollment(studentId, courseId) {
+    //     const deleteForm = document.getElementById('deleteEnrollmentForm');
+    //     deleteForm.style.display = 'block';
+    //     document.getElementById('deleteStudentIdInput').value = studentId;
+    //     document.getElementById('deleteCourseIdInput').value = courseId;
+    //     document.getElementById('enrollmentList').style.display = 'none';
+    // }
+    //
+    // function cancelDelete() {
+    //     const deleteForm = document.getElementById('deleteEnrollmentForm');
+    //     deleteForm.style.display = 'none';
+    //     document.getElementById('enrollmentList').style.display = 'block';
+    // }
+    //
+    //
+    // function updateEnrollment(studentId, courseId) {
+    //     const updateForm = document.getElementById('updateEnrollmentForm');
+    //     updateForm.style.display = 'block';
+    //     document.getElementById('studentIdInput').value = studentId;
+    //     document.getElementById('courseIdInput').value = courseId;
+    //     document.getElementById('enrollmentList').style.display = 'none';
+    // }
 </script>
 </body>
 </html>

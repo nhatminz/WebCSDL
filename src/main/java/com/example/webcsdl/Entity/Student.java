@@ -49,11 +49,17 @@ public class Student {
     @Column(name = "gpa", precision = 3, scale = 2)
     private BigDecimal gpa;
 
-    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Enrollment> enrollments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Scholarship> scholarships = new ArrayList<>();
+
+    public Student() {}
+
+    public Student(Long id) {
+        this.id = id;
+    }
 
 
     //Helper methods

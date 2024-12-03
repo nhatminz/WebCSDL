@@ -8,12 +8,13 @@ import com.example.webcsdl.Service.DepartmentServiceImpl;
 import com.example.webcsdl.Service.MajorServiceImpl;
 import com.example.webcsdl.Service.MajorServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class MajorController {
@@ -30,6 +31,7 @@ public class MajorController {
         model.addAttribute("departments", departmentServiceImpl.getAllDepartment());
         return "Major";
     }
+
     @PostMapping("/Majors/add")
     public String addMajor(@ModelAttribute("major") MajorDto majorDto) {
         majorServiceImpl.saveMajor(toEntity(majorDto));
@@ -53,6 +55,18 @@ public class MajorController {
     public String updateMajor(@ModelAttribute("major") MajorDto majorDto) {
         majorServiceImpl.saveMajor(toEntity(majorDto));
         return "redirect:/Major";
+    }
+
+    @GetMapping("/deleteMajor/{id}")
+    public String deleteMajorById(@PathVariable(value = "id") long id) {
+        majorServiceImpl.deleteViaId(id);
+        return "redirect:/Major";
+    }
+
+    @GetMapping("/Major/search")
+    public ResponseEntity<List<Major>> searchMajor(@RequestParam String query) {
+        List<Major> results = majorServiceImpl.searchMajor(query);
+        return ResponseEntity.ok(results);
     }
 
     public Major toEntity(MajorDto majorDto) {

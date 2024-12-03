@@ -36,8 +36,9 @@ public class StudentServiceImpl implements StudentServices {
         return stud;
     }
 
-    public List<Student> searchStudents(String query) {
-        return studentRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+    @Override
+    public List<Student> searchStudents(String keyword) {
+        return studentRepository.searchStudents(keyword);
     }
 
     @Override

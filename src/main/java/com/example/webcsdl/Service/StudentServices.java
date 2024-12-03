@@ -9,4 +9,5 @@ public interface StudentServices {
     void saveStudent(Student student);
     Student getById(Long id);
     void deleteViaId(Long id);
+    List<Student> searchStudents(String keyword);
 }

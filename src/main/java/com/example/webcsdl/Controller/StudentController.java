@@ -93,10 +93,10 @@ public class StudentController {
     }
 
     @GetMapping("/Student/search")
-    public ResponseEntity<List<StudentDto>> searchStudents(@RequestParam String query) {
-        List<Student> students = studentServiceImpl.searchStudents(query);
-        List<StudentDto> studentDtos = students.stream().map(this::toDto).toList();
-        return ResponseEntity.ok(studentDtos);
+    @ResponseBody
+    public List<StudentDto> searchStudents(@RequestParam("query") String query) {
+        List<Student> students = studentServiceImpl.searchStudents(query); // searchMajors là hàm tìm kiếm trong service
+        return students.stream().map(this::toDto).toList();
     }
 
     @GetMapping("/deleteStudent/{id}")

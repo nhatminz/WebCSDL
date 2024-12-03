@@ -7,46 +7,36 @@ function backToTable() {
     document.getElementById('addTeacherForm').style.display = 'none';
     document.getElementById('teachersList').style.display = 'block';
 }
+
 function searchTeachers() {
     const searchTerm = document.getElementById('searchInput').value.trim();
 
-    // Kiểm tra nếu không có nội dung nhập vào
-    if (!searchTerm) {
-        return;
-    }
-
     fetch(`/Teachers/search?query=${encodeURIComponent(searchTerm)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             const tableBody = document.querySelector("#teachersTable tbody");
-            tableBody.innerHTML = ''; // Xóa dữ liệu cũ trong bảng
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
 
             if (data.length > 0) {
                 data.forEach(teacher => {
                     const row = document.createElement('tr');
-                    row.id = `row-${teacher.id}`;
                     row.innerHTML = `
                         <td>${teacher.id}</td>
                         <td>${teacher.firstName}</td>
                         <td>${teacher.lastName}</td>
-                        <td>${teacher.email}</td>
-                        <td>${teacher.phoneNumber}</td>
-                        <td>${teacher.department?.departmentName || 'N/A'}</td>
-                        <td class="action-buttons">
-                            <a href="/Teachers/update/${teacher.id}" class="update-btn">Update</a>
+                        <td>${teacher.email || 'N/A'}</td>
+                        <td>${teacher.phoneNumber || 'N/A'}</td>
+                        <td>${teacher.departmentName || 'N/A'}</td>
+                        <td>
+                            <a href="/Teachers/update/${teacher.id}" class="btn btn-primary">Update</a>
                             <a href="/deleteTeacher/${teacher.id}" class="btn btn-danger">Delete</a>
                         </td>
                     `;
-                    tableBody.appendChild(row); // Thêm hàng mới vào bảng
+                    tableBody.appendChild(row);
                 });
             } else {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="7">No results found</td>`; // Nếu không có kết quả
+                row.innerHTML = `<td colspan="7">No results found</td>`;
                 tableBody.appendChild(row);
             }
         })
@@ -54,3 +44,4 @@ function searchTeachers() {
             console.error("Error searching teachers:", error);
         });
 }
+

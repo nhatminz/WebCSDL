@@ -40,8 +40,9 @@ public class MajorServiceImpl implements MajorServices {
         majorRepository.deleteById(id);
     }
 
-    public List<Major> searchMajor(String search) {
-        return majorRepository.findByMajorNameContainingIgnoreCase(search);
+    @Override
+    public List<Major> searchMajors(String keyword) {
+        return majorRepository.searchMajors(keyword);
     }
 
     @Override

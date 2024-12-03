@@ -65,8 +65,8 @@
     <!-- List Majors Table -->
     <div id="majorsList">
         <div class="search-section">
-            <input type="text" id="searchInput" class="searchInput" placeholder="Search..." oninput="searchMajor()">
-            <button onclick="searchMajor()">Search</button>
+            <input type="text" id="searchInput" placeholder="Search Major..." oninput="searchMajors()">
+            <button onclick="searchMajors()">Search</button>
         </div>
         <table id="majorsTable">
             <thead>
@@ -140,34 +140,34 @@
     function logout() {
         window.location.href = 'logout';
     }
-    function searchMajor() {
+
+    function searchMajors() {
         const searchTerm = document.getElementById('searchInput').value.trim();
 
-        fetch(`/Major/search?query=${encodeURIComponent(searchTerm)}`)
+        fetch(`/Majors/search?query=${encodeURIComponent(searchTerm)}`)
             .then(response => response.json())
             .then(data => {
                 const tableBody = document.querySelector("#majorsTable tbody");
-                tableBody.innerHTML = '';
+                tableBody.innerHTML = ''; // Xóa nội dung cũ
 
                 if (data.length > 0) {
                     data.forEach(major => {
                         const row = document.createElement('tr');
-                        row.id = `row-${major.id}`;
                         row.innerHTML = `
-                    <td>${major.id}</td>
-                    <td>${major.majorName}</td>
-                    <td>${major.description}</td>
-                    <td>${major.departmentName}</td>
-                    <td class="action-buttons">
-                    <a href="/Majors/update/${major.id}" class="update-btn">Update</a>
-                    <a href="/deleteMajor/${major.id}">Delete</a>
-                     </td>
-                `;
+                        <td>${major.id}</td>
+                        <td>${major.majorName}</td>
+                        <td>${major.description}</td>
+                        <td>${major.departmentName || 'N/A'}</td>
+                        <td>
+                            <a href="/Majors/update/${major.id}" class="btn btn-primary">Update</a>
+                            <a href="/deleteMajor/${major.id}" class="btn btn-danger">Delete</a>
+                        </td>
+                    `;
                         tableBody.appendChild(row);
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="7">No results found</td>`;
+                    row.innerHTML = `<td colspan="5">No results found</td>`;
                     tableBody.appendChild(row);
                 }
             })
@@ -175,6 +175,8 @@
                 console.error("Error searching majors:", error);
             });
     }
+
+
 </script>
 </body>
 </html>

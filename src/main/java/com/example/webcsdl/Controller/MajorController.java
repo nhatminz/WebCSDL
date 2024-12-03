@@ -63,11 +63,13 @@ public class MajorController {
         return "redirect:/Major";
     }
 
-    @GetMapping("/Major/search")
-    public ResponseEntity<List<Major>> searchMajor(@RequestParam String query) {
-        List<Major> results = majorServiceImpl.searchMajor(query);
-        return ResponseEntity.ok(results);
+    @GetMapping("/Majors/search")
+    @ResponseBody
+    public List<MajorDto> searchMajors(@RequestParam("query") String keyword) {
+        List<Major> majors = majorServiceImpl.searchMajors(keyword); // searchMajors là hàm tìm kiếm trong service
+        return majors.stream().map(this::toDto).toList();
     }
+
 
     public Major toEntity(MajorDto majorDto) {
         Major result = new Major();
@@ -80,12 +82,13 @@ public class MajorController {
         return result;
     }
 
-    private static MajorDto toDto(Major major) {
+    private MajorDto toDto(Major major) {
         MajorDto result = new MajorDto();
         result.setId(major.getId());
         result.setMajorName(major.getMajorName());
         result.setDescription(major.getDescription());
         result.setDepartmentId(major.getDepartment().getId());
+        result.setDepartmentName(major.getDepartment().getDepartmentName());
         return result;
     }
 }

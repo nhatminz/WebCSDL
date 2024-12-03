@@ -12,4 +12,5 @@ public interface MajorServices {
     Major getById(Long id);
     void deleteViaId(Long id);
     Optional<Major> getMajorByName(String name);
+    List<Major> searchMajors(String keyword);
 }

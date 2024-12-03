@@ -15,4 +15,5 @@ public final class MajorDto {
     public String majorName;
     public String description;
     public Long departmentId;
+    public String departmentName;
 }

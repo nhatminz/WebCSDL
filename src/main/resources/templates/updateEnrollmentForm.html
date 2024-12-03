@@ -32,8 +32,10 @@
     <label for="enrollmentDate">Enrollment Date</label>
     <input type="date" id="enrollmentDate" th:field="*{enrollmentDate}" required>
 
-    <label for="grade">Grade</label>
-    <input type="number" id="grade" th:field="*{grade}" step="0.01" required>
+    <div class="form-row">
+      <label for="grade">Grade</label>
+      <input type="number" id="grade" th:field="*{grade}" step="0.01" required>
+    </div>
 
     <div class="action-button">
       <button type="button" onclick="window.location.href='/Enrollment'">Cancel</button>

@@ -26,14 +26,20 @@ h2 {
     text-align: center;
     margin-bottom: 10px;
 }
-
+.form-row {
+    display: flex;
+    align-items: center; /* Đảm bảo label và input cùng chiều cao */
+    margin-bottom: 10px;
+}
 label {
     display: inline-block; /* Căn trái cho label */
     width: 150px; /* Đặt chiều rộng cố định cho label */
     font-weight: bold;
 }
-
+input[type="email"],
 input[type="text"],
+input[type="number"],
+select,
 textarea {
     width: calc(100% - 160px); /* Đảm bảo input chiếm phần còn lại của dòng */
     padding: 10px;
@@ -41,12 +47,10 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-select {
-    width: calc(100% - 160px); /* Đảm bảo input chiếm phần còn lại của dòng */
+input[type="date"] {
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 textarea {

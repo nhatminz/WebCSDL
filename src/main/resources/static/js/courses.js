@@ -45,19 +45,3 @@ function searchCourses() {
             console.error("Error searching courses:", error);
         });
 }
-let sortDirectionCredits = 'asc';
-
-function sortTableByCredits() {
-    const table = document.getElementById("coursesTable");
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
-    rows.sort((rowA, rowB) => {
-        const creditsA = parseInt(rowA.cells[3].textContent.trim()) || 0;
-        const creditsB = parseInt(rowB.cells[3].textContent.trim()) || 0;
-
-        return sortDirectionCredits === 'asc' ? creditsA - creditsB : creditsB - creditsA;
-    });
-    sortDirectionCredits = sortDirectionCredits === 'asc' ? 'desc' : 'asc';
-    const tableBody = table.querySelector("tbody");
-    tableBody.innerHTML = "";
-    rows.forEach(row => tableBody.appendChild(row));
-}

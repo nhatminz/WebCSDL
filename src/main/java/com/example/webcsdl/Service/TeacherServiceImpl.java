@@ -40,7 +40,9 @@ public class TeacherServiceImpl implements TeacherServices {
     public void deleteViaId(Long id) {
         teacherRepository.deleteById(id);
     }
-    public List<Teacher> searchTeachers(String query) {
-        return teacherRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+
+    @Override
+    public List<Teacher> searchTeachers(String keyword) {
+        return teacherRepository.searchTeachers(keyword);
     }
 }

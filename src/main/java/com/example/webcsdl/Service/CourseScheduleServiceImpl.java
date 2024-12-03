@@ -37,9 +37,10 @@ public class CourseScheduleServiceImpl implements CourseScheduleServices {
         return coursesh;
     }
 
-    public List<CourseSchedule> searchSchedulesByCourseName(Long classromId) {
-        return courseScheduleRepository.findByClassroomId(classromId);
+    public List<CourseSchedule> searchCourseSchedules(String keyword) {
+        return courseScheduleRepository.searchCourseSchedules(keyword);
     }
+
 
     @Override
     public void deleteViaId(Long id) {

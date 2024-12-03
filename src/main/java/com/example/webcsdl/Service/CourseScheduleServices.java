@@ -9,4 +9,5 @@ public interface CourseScheduleServices {
     void saveCourseSchedule(CourseSchedule courseSchedule);
     CourseSchedule getById(Long id);
     void deleteViaId(Long id);
+    List<CourseSchedule> searchCourseSchedules(String keyword);
 }

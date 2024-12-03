@@ -75,17 +75,13 @@ public class CourseScheduleController {
 
     @GetMapping("/CourseSchedule/search")
     public ResponseEntity<List<CourseScheduleDto>> searchCourseSchedules(@RequestParam(required = false) String query) {
-        List<CourseSchedule> schedules;
-        if (query == null || query.isEmpty()) {
-            schedules = courseScheduleServiceImpl.getAllCourseSchedule();
-        } else {
-            schedules = courseScheduleServiceImpl.searchSchedulesByCourseName(Long.valueOf(query));
-        }
+        List<CourseSchedule> schedules = courseScheduleServiceImpl.searchCourseSchedules(query != null ? query : "");
         List<CourseScheduleDto> scheduleDtos = schedules.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(scheduleDtos);
     }
+
 
 
     @GetMapping("/deleteCourseSchedule/{id}")

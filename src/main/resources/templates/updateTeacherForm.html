@@ -38,7 +38,7 @@
         <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
 
         <label for="departmentId">Department</label>
-        <select id="departmentId" th:field="*{departmentId}" required>
+        <select id="departmentId" th:field="*{department}" required>
             <option th:each="dp : ${departments}" th:value="${dp.id}" th:text="${dp.departmentName}"
                     th:selected="${teacher.department.id == dp.id}"></option>
         </select>

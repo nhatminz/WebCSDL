@@ -64,6 +64,7 @@
 
     <!-- List Course Schedules Table -->
     <div id="courseSchedulesList">
+        <button id="sortButton" onclick="sortTableByClassroom()">Sort</button>
         <div class="search-section">
             <input type="text" id="searchInput" placeholder="Search Course Schedule..." oninput="searchCourseSchedules()">
             <button onclick="searchCourseSchedules()">Search</button>
@@ -191,7 +192,24 @@
             });
     }
 
+    let sortDirection = 'asc';
+    function sortTableByClassroom() {
+        const table = document.getElementById('courseSchedulesTable');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
 
+        rows.sort((rowA, rowB) => {
+            const classroomA = parseInt(rowA.cells[2].textContent.trim());
+            const classroomB = parseInt(rowB.cells[2].textContent.trim());
+
+            return sortDirection === 'asc' ? classroomA - classroomB : classroomB - classroomA;
+        });
+
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+
+        const tableBody = table.querySelector('tbody');
+        tableBody.innerHTML = '';
+        rows.forEach(row => tableBody.appendChild(row));
+    }
 </script>
 </body>
 </html>

@@ -129,7 +129,10 @@
         document.getElementById('addDepartmentForm').style.display = 'none';
         document.getElementById('departmentList').style.display = 'block';
     }
-
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
     function logout() {
         window.location.href = 'logout';
     }

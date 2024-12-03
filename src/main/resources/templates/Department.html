@@ -12,7 +12,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -119,58 +119,9 @@
 </div>
 
 <!-- Scripts -->
-<script>
-    function showAddDepartmentForm() {
-        document.getElementById('addDepartmentForm').style.display = 'block';
-        document.getElementById('departmentList').style.display = 'none';
-    }
-
-    function backToTable() {
-        document.getElementById('addDepartmentForm').style.display = 'none';
-        document.getElementById('departmentList').style.display = 'block';
-    }
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-    function logout() {
-        window.location.href = 'logout';
-    }
-    function searchDepartments() {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-
-        fetch(`/Department/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector("#departmentTable tbody");
-                tableBody.innerHTML = '';
-
-                if (data.length > 0) {
-                    data.forEach(department => {
-                        const row = document.createElement('tr');
-                        row.id = `row-${department.id}`;
-                        row.innerHTML = `
-                        <td>${department.id}</td>
-                        <td>${department.departmentName}</td>
-                        <td>${department.location}</td>
-                        <td class="action-buttons">
-                            <a href="/Department/update/${department.id}" class="btn btn-primary">Update</a>
-                            <a href="/deleteDepartment/${department.id}" class="btn btn-danger">Delete</a>
-                        </td>
-                    `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="4">No results found</td>`;
-                    tableBody.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error("Error searching departments:", error);
-            });
-    }
-
+<script
+src = "/js/department.js"defer>
 </script>
+<script  src = "/js/content.js" defer></script>
 </body>
 </html>

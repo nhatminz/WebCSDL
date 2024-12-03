@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Management System - Courses</title>
     <link rel="stylesheet" href="/css/main.css">
-
+    <script
+            src="/js/classes.js" defer>
+    </script>
+    <script src="/js/content.js" defer></script>
 </head>
 <body>
 <!-- Top Navbar (Không thay đổi) -->
@@ -13,7 +16,7 @@
     <h1>School Management System</h1>
     <div class="user-info" onclick="toggleDropdown()">
         <img src="https://via.placeholder.com/35" alt="User Avatar">
-        <span>username</span>
+        <span id="username">Loading...</span>
     </div>
     <div id="dropdown-menu" class="dropdown-menu">
         <a href="Profile.html">Profile</a>
@@ -110,57 +113,5 @@
         </form>
     </div>
 </div>
-
-<script>
-    function showAddClassForm() {
-        document.getElementById('addClassForm').style.display = 'flex';
-        document.getElementById('classesList').style.display = 'none';
-    }
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdown-menu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-    function logout() {
-        window.location.href = 'logout';
-    }
-    function backToTable() {
-        document.getElementById('addClassForm').style.display = 'none';
-        document.getElementById('classesList').style.display = 'block';
-    }
-
-    function searchClasses() {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-        fetch(`/SchoolClass/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector("#classesTable tbody");
-                tableBody.innerHTML = '';
-
-                if (data.length > 0) {
-                    data.forEach(schoolClass => {
-                        const row = document.createElement('tr');
-                        row.id = `row-${schoolClass.id}`;
-                        row.innerHTML = `
-                            <td>${schoolClass.id}</td>
-                            <td>${schoolClass.className}</td>
-                            <td>${schoolClass.classDescription}</td>
-                            <td class="action-buttons">
-                            <a href="/SchoolClass/update/${schoolClass.id}" class="update-btn">Update</a>
-                            <a href="/deleteSchoolClass/${schoolClass.id}" class="btn btn-danger">Delete</a>
-                            </td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="4">No results found</td>`;
-                    tableBody.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error("Error searching classes:", error);
-            });
-    }
-</script>
 </body>
 </html>

@@ -15,5 +15,7 @@ public final class TeacherDto {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private Long departmentId;
+    private Department department;
+//    private Long departmentId;
+//    private String departmentName;
 }

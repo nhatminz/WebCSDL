@@ -121,7 +121,7 @@
             <input type="text" th:field="*{phoneNumber}" required><br>
 
             <label>Department:</label>
-            <select th:field="*{departmentId}" required>
+            <select th:field="*{department}" required>
                 <option th:each="dep : ${departments}" th:value="${dep.id}" th:text="${dep.departmentName}"></option>
             </select><br>
             <div class="action-buttons">
@@ -181,9 +181,9 @@
                         <td>${teacher.lastName}</td>
                         <td>${teacher.email}</td>
                         <td>${teacher.phoneNumber}</td>
-                        <td>${teacher.departmentName}</td>
+                        <td>${teacher.department?.departmentName || 'N/A'}</td>
                         <td class="action-buttons">
-                            <a th:href="/Teachers/update/${teacher.id}" class="update-btn">Update</a>
+                           <a th:href="@{/Teachers/update/{id}(id=${teacher.id})}" class="update-btn">Update</a>
                             <button class="delete-btn" onclick="deleteTeacher(${teacher.id})">Delete</button>
                         </td>
                     `;

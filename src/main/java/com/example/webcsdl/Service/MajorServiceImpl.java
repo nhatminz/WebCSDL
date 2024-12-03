@@ -1,7 +1,6 @@
 package com.example.webcsdl.Service;
 
 import com.example.webcsdl.Entity.Major;
-import com.example.webcsdl.Entity.Student;
 import com.example.webcsdl.Repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,10 @@ public class MajorServiceImpl implements MajorServices {
     @Override
     public void deleteViaId(Long id) {
         majorRepository.deleteById(id);
+    }
+
+    public List<Major> searchMajor(String search) {
+        return majorRepository.findByMajorNameContainingIgnoreCase(search);
     }
 
     @Override

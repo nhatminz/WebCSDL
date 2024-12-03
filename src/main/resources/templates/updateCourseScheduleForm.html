@@ -19,42 +19,6 @@
     </div>
 </div>
 
-<div class="sidebar">
-    <a href="Dashboard" class="menu-item">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-    </a>
-    <a href="Courses" class="menu-item">
-        <i class="fas fa-book"></i> Courses
-    </a>
-    <a href="Students" class="menu-item">
-        <i class="fas fa-user-graduate"></i> Students
-    </a>
-    <a href="CourseSchedule" class="menu-item">
-        <i class="fas fa-calendar-alt"></i> Course Schedule
-    </a>
-    <a href="Enrollment" class="menu-item">
-        <i class="fas fa-clipboard-check"></i> Enrollment
-    </a>
-    <a href="Major" class="menu-item">
-        <i class="fas fa-graduation-cap"></i> Major
-    </a>
-    <a href="Scholarship" class="menu-item">
-        <i class="fas fa-gift"></i> Scholarship
-    </a>
-    <a href="Department" class="menu-item">
-        <i class="fas fa-building"></i> Department
-    </a>
-    <a href="Teachers" class="menu-item">
-        <i class="fas fa-user-tie"></i> Teachers
-    </a>
-    <a href="Classes" class="menu-item">
-        <i class="fas fa-chalkboard-teacher"></i> Classes
-    </a>
-    <a href="Settings" class="menu-item">
-        <i class="fas fa-cogs"></i> Settings
-    </a>
-</div>
-
 <div class="container">
     <h2>Update Course Schedule</h2>
     <form th:action="@{/CourseSchedule/save}" th:object="${courseScheduleDto}" method="POST">

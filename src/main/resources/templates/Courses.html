@@ -123,7 +123,7 @@
             <label>Teacher:</label>
             <select th:field="*{teacherId}" required>
                 <option th:each="teach : ${teachers}" th:value="${teach.id}"
-                        th:text="${teach.firstName + teach.lastName}"></option>
+                        th:text="${teach.firstName + ' ' + teach.lastName}"></option>
             </select>
 
             <div class="action-buttons">

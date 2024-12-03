@@ -36,7 +36,7 @@ public class ScholarshipController {
         return "redirect:/Scholarship";
     }
 
-    @GetMapping("/Scholarship/update/{id}")
+    @GetMapping("/Scholarships/update/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Scholarship scholarship = scholarshipServiceImpl.getById(id);
         if (scholarship == null) {
@@ -54,6 +54,7 @@ public class ScholarshipController {
         scholarshipDto.setScholarshipName(scholarship.getScholarshipName());
         scholarshipDto.setAmount(scholarship.getAmount());
         scholarshipDto.setStudentId(scholarship.getStudent() != null ? scholarship.getStudent().getId() : null);
+        scholarshipDto.setStudentName(scholarship.getStudent().getFirstName() + " " + scholarship.getStudent().getLastName());
         return scholarshipDto;
     }
 
@@ -65,11 +66,11 @@ public class ScholarshipController {
         return "redirect:/Scholarship";
     }
 
-    @GetMapping("/Scholarship/search")
-    public ResponseEntity<List<ScholarshipDto>> searchScholarships(@RequestParam String query) {
-        List<Scholarship> scholarships = scholarshipServiceImpl.searchScholarships(query);
-        List<ScholarshipDto> scholarshipDtos = scholarships.stream().map(this::toDto).toList();
-        return ResponseEntity.ok(scholarshipDtos);
+    @GetMapping("/Scholarships/search")
+    @ResponseBody
+    public List<ScholarshipDto> searchScholarships(@RequestParam("query") String query) {
+        List<Scholarship> scholarships  = scholarshipServiceImpl.searchScholarships(query); // searchMajors là hàm tìm kiếm trong service
+        return scholarships.stream().map(this::toDto).toList();
     }
 
     @GetMapping("/deleteScholarship/{id}")

@@ -15,4 +15,6 @@ public class ScholarshipDto {
     public String scholarshipName;
     public BigDecimal amount;
     public Long studentId;
+    public String studentName;
+
 }

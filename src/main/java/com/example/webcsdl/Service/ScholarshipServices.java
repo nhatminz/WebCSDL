@@ -9,4 +9,5 @@ public interface ScholarshipServices {
     void saveScholarship(Scholarship scholarship);
     Scholarship getById(Long id);
     void deleteViaId(Long id);
+    List<Scholarship> searchScholarships(String keyword);
 }

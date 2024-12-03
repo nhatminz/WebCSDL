@@ -42,8 +42,9 @@ public class ScholarshipServiceImpl implements ScholarshipServices {
         scholarshipRepository.deleteById(id);
     }
 
-    public List<Scholarship> searchScholarships(String query) {
-        return scholarshipRepository.findByScholarshipNameContainingIgnoreCase(query);
+    @Override
+    public List<Scholarship> searchScholarships(String keyword) {
+        return scholarshipRepository.searchScholarships(keyword);
     }
 
 }

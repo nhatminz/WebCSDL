@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher,Long> {
     List<Teacher> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
+    long count();
 }

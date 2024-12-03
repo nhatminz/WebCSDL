@@ -41,7 +41,7 @@ CREATE TABLE courses (
                          teacher_id BIGINT,
                          CONSTRAINT fk_major_course FOREIGN KEY (major_id) REFERENCES majors(id),
                          CONSTRAINT fk_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-                         id INT PRIMARY KEY
+                         id BIGINT PRIMARY KEY
 );
 
 CREATE TABLE students (

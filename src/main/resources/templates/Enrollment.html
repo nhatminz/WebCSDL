@@ -109,12 +109,12 @@
             <label>Student:</label>
             <select name="studentId" required>
                 <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName + ' ' + student.lastName}"></option>
-            </select><br>
+            </select>
 
             <label>Course:</label>
             <select name="courseId" required>
                 <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
-            </select><br>
+            </select>
 
             <label>Enrollment Date:</label>
             <input type="date" th:field="*{enrollmentDate}" required>
@@ -123,8 +123,8 @@
             <input type="number" th:field="*{grade}" step="0.01">
 
             <div class="action-buttons">
-                <button type="submit">Submit</button>
                 <button type="button" onclick="backToTable()">Back</button>
+                <button type="submit">Submit</button>
             </div>
         </form>
     </div>

@@ -1,6 +1,5 @@
 package com.example.webcsdl.Repository;
 
-import com.example.webcsdl.Entity.SchoolClass;
 import com.example.webcsdl.Entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 

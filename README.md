@@ -87,6 +87,9 @@
    - Mở trình duyệt và truy cập: [http://localhost:8080](http://localhost:8080).
 
 ---
+## Database
+![image](https://github.com/user-attachments/assets/fa4e1680-5d34-4042-b4f3-d12c239f124c)
+
 
 
 

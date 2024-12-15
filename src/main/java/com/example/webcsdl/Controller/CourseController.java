@@ -1,10 +1,11 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
-import com.example.webcsdl.Service.CourseServiceImpl;
-import com.example.webcsdl.Service.MajorServiceImpl;
-import com.example.webcsdl.Service.TeacherServiceImpl;
+import com.example.webcsdl.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,10 @@ public class CourseController {
     private MajorServiceImpl majorServiceImpl;
     @Autowired
     private TeacherServiceImpl teacherServiceImpl;
+    @Autowired
+    private PdfExportService pdfExportService;
+    @Autowired
+    private CourseServices courseServices;
 
     @GetMapping("/Courses")
     public String showCourseManagement(Model model) {
@@ -101,5 +106,25 @@ public class CourseController {
         Teacher teacher = teacherServiceImpl.getById(courseDto.getTeacherId());
         course.setTeacher(teacher);
         return course;
+    }
+    public CourseController(PdfExportService pdfExportService, CourseServices courseServices) {
+        this.pdfExportService = pdfExportService;
+        this.courseServices = courseServices;
+    }
+
+    @GetMapping("/exportCourses")
+    public ResponseEntity<byte[]> exportCourses() {
+        List<Course> courses = courseServices.getAllCourse();
+         List<CourseDto> courseDtos = courses.stream()
+                 .map(this::toDto)
+                 .collect(Collectors.toList());
+
+        byte[] pdfBytes = pdfExportService.exportCoursesToPdf(courseDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "courses.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

@@ -1,10 +1,11 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
-import com.example.webcsdl.Service.MajorServiceImpl;
-import com.example.webcsdl.Service.ScholarshipServiceImpl;
-import com.example.webcsdl.Service.StudentServiceImpl;
+import com.example.webcsdl.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ScholarshipController {
@@ -21,6 +23,12 @@ public class ScholarshipController {
     private StudentServiceImpl studentServiceImpl;
     @Autowired
     private MajorServiceImpl majorServiceImpl;
+
+    @Autowired
+    private PdfExportService pdfExportService;
+
+    @Autowired
+    private ScholarshipServices scholarshipServices;
 
     @GetMapping("/Scholarship")
     public String showScholarshipManagement(Model model) {
@@ -94,4 +102,21 @@ public class ScholarshipController {
         result.setStudent(student);
         return result;
     }
+    @GetMapping("/exportScholarships")
+    public ResponseEntity<byte[]> exportScholarships() {
+        List<Scholarship> scholarships = scholarshipServices.getAllScholarship();
+
+        List<ScholarshipDto> scholarshipDtos = scholarships.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        byte[] pdfBytes = pdfExportService.exportScholarshipsToPdf(scholarshipDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "scholarships.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
 }

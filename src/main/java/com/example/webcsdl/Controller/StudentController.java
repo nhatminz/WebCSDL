@@ -6,12 +6,12 @@ import com.example.webcsdl.Entity.SchoolClass;
 import com.example.webcsdl.Entity.Student;
 
 import com.example.webcsdl.Entity.StudentDto;
-import com.example.webcsdl.Service.MajorServiceImpl;
-import com.example.webcsdl.Service.SchoolClassServiceImpl;
-import com.example.webcsdl.Service.StudentServiceImpl;
-import com.example.webcsdl.Service.StudentServices;
+import com.example.webcsdl.Service.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +35,9 @@ public class StudentController {
 
     @Autowired
     public StudentServices studentServices;
+
+    @Autowired
+    private PdfExportService pdfExportService;
 
     @GetMapping("/Students")
     public String showStudentManagement(Model model) {
@@ -130,4 +133,26 @@ public class StudentController {
 
         return result;
     }
+
+    public StudentController(PdfExportService pdfExportService, StudentServices studentService) {
+        this.pdfExportService = pdfExportService;
+        this.studentServices = studentService;
+    }
+
+    @GetMapping("/exportStudents")
+    public ResponseEntity<byte[]> exportStudents() {
+        List<Student> students = studentServices.getAllStudent();
+        List<StudentDto> studentDtos = students.stream()
+                .map(this::toDto)
+                .toList(); // Java 16+, hoặc dùng .collect(Collectors.toList()) với các phiên bản Java thấp hơn.
+
+        byte[] pdfBytes = pdfExportService.exportStudentsToPdf(studentDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "students.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
 }

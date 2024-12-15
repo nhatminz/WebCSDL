@@ -1,10 +1,11 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
-import com.example.webcsdl.Service.CourseServiceImpl;
-import com.example.webcsdl.Service.DepartmentServiceImpl;
-import com.example.webcsdl.Service.TeacherServiceImpl;
+import com.example.webcsdl.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,12 @@ public class TeacherController {
 
     @Autowired
     private CourseServiceImpl courseServiceImpl;
+
+    @Autowired
+    private TeacherServices teacherServices;
+
+    @Autowired
+    private PdfExportService pdfExportService;
 
     @GetMapping("/Teachers")
     public String showTeacherManagement(Model model) {
@@ -93,5 +100,26 @@ public class TeacherController {
     public List<TeacherDto> searchTeachers(@RequestParam("query") String query) {
         List<Teacher> teachers = teacherServiceImpl.searchTeachers(query);
         return teachers.stream().map(this::toDto).toList();
+    }
+
+    public TeacherController(PdfExportService pdfExportService, TeacherServices teacherService) {
+        this.pdfExportService = pdfExportService;
+        this.teacherServices = teacherService;
+    }
+
+    @GetMapping("/exportTeachers")
+    public ResponseEntity<byte[]> exportTeachers() {
+        List<Teacher> teachers = teacherServices.getAllTeacher();
+        List<TeacherDto> teacherDtos = teachers.stream()
+                .map(this::toDto)
+                .toList();
+
+        byte[] pdfBytes = pdfExportService.exportTeachersToPdf(teacherDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "teachers.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

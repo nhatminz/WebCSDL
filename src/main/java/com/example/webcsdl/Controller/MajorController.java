@@ -7,7 +7,11 @@ import com.example.webcsdl.Entity.StudentDto;
 import com.example.webcsdl.Service.DepartmentServiceImpl;
 import com.example.webcsdl.Service.MajorServiceImpl;
 import com.example.webcsdl.Service.MajorServices;
+import com.example.webcsdl.Service.PdfExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MajorController {
@@ -23,6 +28,11 @@ public class MajorController {
 
     @Autowired
     private DepartmentServiceImpl departmentServiceImpl;
+    @Autowired
+    private PdfExportService pdfExportService;
+
+    @Autowired
+    private MajorServices majorServices;
 
     @GetMapping("/Major")
     public String showMajorManagement(Model model) {
@@ -91,4 +101,22 @@ public class MajorController {
         result.setDepartmentName(major.getDepartment().getDepartmentName());
         return result;
     }
+
+    @GetMapping("/exportMajors")
+    public ResponseEntity<byte[]> exportMajors() {
+        List<Major> majors = majorServices.getAllMajor();
+
+        List<MajorDto> majorDtos = majors.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        byte[] pdfBytes = pdfExportService.exportMajorsToPdf(majorDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "majors.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
 }

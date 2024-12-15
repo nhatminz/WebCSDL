@@ -2,9 +2,14 @@ package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.SchoolClass;
 import com.example.webcsdl.Entity.Student;
+import com.example.webcsdl.Service.PdfExportService;
 import com.example.webcsdl.Service.SchoolClassServiceImpl;
+import com.example.webcsdl.Service.SchoolClassServices;
 import com.example.webcsdl.Service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +22,13 @@ import java.util.List;
 public class SchoolClassController {
     @Autowired
     private SchoolClassServiceImpl schoolClassServiceImpl;
+
+    @Autowired
+    private SchoolClassServices schoolClassServices;
+
+    @Autowired
+    private PdfExportService pdfExportService;
+
     @GetMapping("/Classes")
     public String showStudentManagement(Model model) {
         model.addAttribute("schoolClasses", schoolClassServiceImpl.getAllSchoolClass());
@@ -61,5 +73,22 @@ public class SchoolClassController {
     public ResponseEntity<List<SchoolClass>> searchClasses(@RequestParam String query) {
         List<SchoolClass> results = schoolClassServiceImpl.searchClasses(query);  // Gọi từ service
         return ResponseEntity.ok(results);
+    }
+    public SchoolClassController(PdfExportService pdfExportService, SchoolClassServices schoolClassService) {
+        this.pdfExportService = pdfExportService;
+        this.schoolClassServices = schoolClassService;
+    }
+
+    @GetMapping("/exportSchoolClasses")
+    public ResponseEntity<byte[]> exportSchoolClasses() {
+        List<SchoolClass> schoolClasses = schoolClassServices.getAllSchoolClass();
+
+        byte[] pdfBytes = pdfExportService.exportSchoolClassesToPdf(schoolClasses);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "school_classes.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

@@ -39,3 +39,24 @@ function backToTable() {
     document.getElementById('addClassForm').style.display = 'none';
     document.getElementById('classesList').style.display = 'block';
 }
+
+function exportToPDF() {
+    fetch('/exportSchoolClasses', { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to generate PDF');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'school_classes.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error exporting PDF:', error);
+        });
+}

@@ -62,3 +62,24 @@ function backToTable() {
     document.getElementById('addCourseScheduleForm').style.display = 'none';
     document.getElementById('courseSchedulesList').style.display = 'block';
 }
+
+function exportToPDF() {
+    fetch('/exportCourseSchedules', { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to generate PDF');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'course_schedules.pdf'; // Tên file PDF khi tải về
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error exporting PDF:', error);
+        });
+}

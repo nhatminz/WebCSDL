@@ -1,11 +1,12 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
-import com.example.webcsdl.Service.CourseServiceImpl;
-import com.example.webcsdl.Service.EnrollmentServiceImpl;
-import com.example.webcsdl.Service.EnrollmentServices;
-import com.example.webcsdl.Service.StudentServiceImpl;
+import com.example.webcsdl.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,10 @@ public class EnrollmentController {
     private CourseServiceImpl courseServiceImpl;
     @Autowired
     private StudentServiceImpl studentServiceImpl;
+    @Autowired
+    private PdfExportService pdfExportService;
+    @Autowired
+    private EnrollmentServices enrollmentServices;
 
     @GetMapping("/Enrollment")
     public String showEnrollmentManagement(Model model) {
@@ -105,4 +110,26 @@ public class EnrollmentController {
         enrollmentDto.setEnrollmentDate(enrollment.getEnrollmentDate().toString());
         return enrollmentDto;
     }
+
+    @GetMapping("/exportEnrollments")
+    public ResponseEntity<byte[]> exportEnrollments() {
+        // Lấy danh sách Enrollment từ service
+        List<Enrollment> enrollments = enrollmentServices.getAllEnrollments();
+
+        // Chuyển đổi các Enrollment sang EnrollmentDto
+        List<EnrollmentDto> enrollmentDtos = enrollments.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        // Xuất danh sách EnrollmentDto ra PDF
+        byte[] pdfBytes = pdfExportService.exportEnrollmentsToPdf(enrollmentDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "enrollments.pdf");
+
+        // Trả về PDF dưới dạng response
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+    }
+
 }

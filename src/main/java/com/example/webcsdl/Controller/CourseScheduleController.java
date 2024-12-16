@@ -1,11 +1,11 @@
 package com.example.webcsdl.Controller;
 
 import com.example.webcsdl.Entity.*;
-import com.example.webcsdl.Service.ClassroomServiceImpl;
-import com.example.webcsdl.Service.CourseScheduleServiceImpl;
-import com.example.webcsdl.Service.CourseScheduleServices;
-import com.example.webcsdl.Service.CourseServiceImpl;
+import com.example.webcsdl.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +26,12 @@ public class CourseScheduleController {
 
     @Autowired
     private ClassroomServiceImpl classroomServiceImpl;
+
+    @Autowired
+    private CourseScheduleServices courseScheduleServices;
+
+    @Autowired
+    private PdfExportService pdfExportService;
 
     @GetMapping("/CourseSchedule")
     public String showCourseScheduleManagement(Model model) {
@@ -83,7 +89,6 @@ public class CourseScheduleController {
     }
 
 
-
     @GetMapping("/deleteCourseSchedule/{id}")
     public String deleteCourseScheduleById(@PathVariable(value = "id") long id, RedirectAttributes redirectAttributes) {
         try {
@@ -120,5 +125,26 @@ public class CourseScheduleController {
         Classroom classroom = classroomServiceImpl.getById(dto.getClassroomId());
         courseSchedule.setClassroom(classroom);
         return courseSchedule;
+    }
+
+    public CourseScheduleController(PdfExportService pdfExportService, CourseScheduleServices courseScheduleServices) {
+        this.pdfExportService = pdfExportService;
+        this.courseScheduleServices = courseScheduleServices;
+    }
+
+    @GetMapping("/exportCourseSchedules")
+    public ResponseEntity<byte[]> exportCourseSchedules() {
+        List<CourseSchedule> courseSchedules = courseScheduleServices.getAllCourseSchedule();
+        List<CourseScheduleDto> courseScheduleDtos = courseSchedules.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        byte[] pdfBytes = pdfExportService.exportCourseSchedulesToPdf(courseScheduleDtos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "course_schedules.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

@@ -42,3 +42,24 @@ function searchMajors() {
         });
 }
 
+function exportToPDF() {
+    fetch('/exportMajors', { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to generate PDF');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'majors.pdf'; // Tên file PDF khi tải về
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error exporting PDF:', error);
+        });
+}
+

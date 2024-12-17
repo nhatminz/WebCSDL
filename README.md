@@ -122,12 +122,12 @@
 
 ## Công nghệ sử dụng
 - **Backend**: Spring Boot 3.3.4, Java 21.
-- **Frontend**: HTML, CSS, JavaScript, Thymeleaf.
-- **Cơ sở dữ liệu**: MySQL.
+- **Frontend**: Java, HTML, CSS, JavaScript, Thymeleaf.
+- **Cơ sở dữ liệu**: PostgreSQL hoặc MySQL
 - **Quản lý dự án**: Maven 3.9.9.
 
 ## Yêu cầu hệ thống
-- **Java**: Phiên bản 21 trở lên.
+- **Java**: Phiên bản 17 trở lên.
 - **Maven**: Phiên bản 3.9.9 trở lên.
 - **MySQL**: Phiên bản 8.0 hoặc cao hơn.
 

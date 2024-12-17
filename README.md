@@ -12,6 +12,101 @@
 - Chỉnh sửa, lưu trữ thông tin
 - Tra cứu thông tin
 - Thống kê và báo cáo.
+### Chi tiết các chức năng:
+#### 1. Dashboard
+- Thống kê tổng số:
+  - Sinh viên
+  - Khóa học
+  - Giáo viên
+  - Lớp học
+
+---
+
+#### 2. Courses
+- **Add Course**: Thêm một khóa học mới.
+- **Export to PDF**: Xuất danh sách khóa học ra file PDF.
+- **Search Course**: Tìm kiếm khóa học.
+- **Update**: Cập nhật thông tin khóa học.
+- **Delete**: Xóa một khóa học khỏi danh sách.
+
+---
+
+#### 3. Students
+- **Add Student**: Thêm một sinh viên mới.
+- **Export to PDF**: Xuất danh sách sinh viên ra file PDF.
+- **Search Student**: Tìm kiếm sinh viên.
+- **Update**: Cập nhật thông tin sinh viên.
+- **Delete**: Xóa một sinh viên khỏi danh sách.
+- **Sort**: Sắp xếp sinh viên theo GPA tăng dần.
+
+---
+#### 4. Course Schedule
+- **Add Course Schedule**: Thêm một lịch khóa học.
+- **Export to PDF**: Xuất danh sách lịch khóa học ra file PDF.
+- **Search Course Schedule**: Tìm kiếm lịch khóa học.
+- **Update**: Cập nhật thông tin lịch khóa học.
+- **Delete**: Xóa lịch khóa học.
+- **Sort**: Sắp xếp theo Classroom tăng dần.
+
+---
+
+#### 5. Enrollment
+- **Add Enrollment**: Thêm một sự đăng ký mới.
+- **Export to PDF**: Xuất danh sách đăng ký ra file PDF.
+- **Search Enrollment**: Tìm kiếm sự đăng ký.
+- **Update**: Cập nhật thông tin đăng ký.
+- **Delete**: Xóa một đăng ký.
+
+---
+
+#### 6. Major
+- **Add Major**: Thêm một chuyên ngành mới.
+- **Export to PDF**: Xuất danh sách chuyên ngành ra file PDF.
+- **Search Major**: Tìm kiếm chuyên ngành.
+- **Update**: Cập nhật thông tin chuyên ngành.
+- **Delete**: Xóa một chuyên ngành.
+
+---
+#### 7. Scholarship
+- **Add Scholarship**: Thêm một học bổng mới.
+- **Export to PDF**: Xuất danh sách học bổng ra file PDF.
+- **Search Scholarship**: Tìm kiếm học bổng.
+- **Update**: Cập nhật thông tin học bổng.
+- **Delete**: Xóa một học bổng.
+- **Sort**: Sắp xếp danh sách học bổng theo Amount tăng dần.
+
+---
+
+#### 8. Department
+- **Add Department**: Thêm một phòng ban mới.
+- **Export to PDF**: Xuất danh sách phòng ban ra file PDF.
+- **Search Department**: Tìm kiếm phòng ban.
+- **Update**: Cập nhật thông tin phòng ban.
+- **Delete**: Xóa một phòng ban.
+
+---
+
+#### 9. Teachers
+- **Add Teacher**: Thêm một giáo viên mới.
+- **Export to PDF**: Xuất danh sách giáo viên ra file PDF.
+- **Search Teacher**: Tìm kiếm giáo viên.
+- **Update**: Cập nhật thông tin giáo viên.
+- **Delete**: Xóa một giáo viên.
+
+---
+#### 10. Classes
+- **Add Classes**: Thêm một lớp học mới.
+- **Export to PDF**: Xuất danh sách lớp học ra file PDF.
+- **Search Classes**: Tìm kiếm lớp học.
+- **Update**: Cập nhật thông tin lớp học.
+- **Delete**: Xóa một lớp học.
+
+---
+
+#### 11. Logout
+- **Log Out**: Nút log out được đặt phía góc phải màn hình, giúp người dùng đăng xuất khỏi tài khoản.
+
+---
 
 ## Công nghệ sử dụng
 - **Backend**: Spring Boot 3.3.4, Java 21.

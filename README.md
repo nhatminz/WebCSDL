@@ -37,7 +37,7 @@
 #### 2. Courses
 - **Add Course**: Thêm một khóa học mới.
 - **Export to PDF**: Xuất danh sách khóa học ra file PDF.
-- **Search Course**: Tìm kiếm khóa học.
+- **Search Course**: Tìm kiếm khóa học theo Course Name hoặc Course Code hoặc Credits hoặc Major hoặc Teacher.
 - **Update**: Cập nhật thông tin khóa học.
 - **Delete**: Xóa một khóa học khỏi danh sách.
 
@@ -46,7 +46,7 @@
 #### 3. Students
 - **Add Student**: Thêm một sinh viên mới.
 - **Export to PDF**: Xuất danh sách sinh viên ra file PDF.
-- **Search Student**: Tìm kiếm sinh viên.
+- **Search Student**: Tìm kiếm sinh viên theo ID hoặc theo First Name , hoặc Last Name hoặc Class  hoặc theo Major.
 - **Update**: Cập nhật thông tin sinh viên.
 - **Delete**: Xóa một sinh viên khỏi danh sách.
 - **Sort**: Sắp xếp sinh viên theo GPA tăng dần.
@@ -55,7 +55,7 @@
 #### 4. Course Schedule
 - **Add Course Schedule**: Thêm một lịch khóa học.
 - **Export to PDF**: Xuất danh sách lịch khóa học ra file PDF.
-- **Search Course Schedule**: Tìm kiếm lịch khóa học.
+- **Search Course Schedule**: Tìm kiếm lịch khóa học theo Course hoặc Classroom hoặc Day of week.
 - **Update**: Cập nhật thông tin lịch khóa học.
 - **Delete**: Xóa lịch khóa học.
 - **Sort**: Sắp xếp theo Classroom tăng dần.
@@ -65,7 +65,7 @@
 #### 5. Enrollment
 - **Add Enrollment**: Thêm một sự đăng ký mới.
 - **Export to PDF**: Xuất danh sách đăng ký ra file PDF.
-- **Search Enrollment**: Tìm kiếm sự đăng ký, có thể search tên sinh viên để biết sinh viên đó học môn gì, hoăc search tên môn học để biết có những sinh viên nào học môn đó
+- **Search Enrollment**: Tìm kiếm sự đăng ký theo Student ID  , hoặc theo Student Name, hoặc theo Course Name
 - **Update**: Cập nhật thông tin đăng ký.
 - **Delete**: Xóa một đăng ký.
 
@@ -74,7 +74,7 @@
 #### 6. Major
 - **Add Major**: Thêm một chuyên ngành mới.
 - **Export to PDF**: Xuất danh sách chuyên ngành ra file PDF.
-- **Search Major**: Tìm kiếm chuyên ngành, có thể tìm kiếm theo department để xem khoa đó có những ngành gì
+- **Search Major**: Tìm kiếm chuyên ngành theo Major Name hoặc theo Description hoặc theo Department
 - **Update**: Cập nhật thông tin chuyên ngành.
 - **Delete**: Xóa một chuyên ngành.
 
@@ -82,7 +82,7 @@
 #### 7. Scholarship
 - **Add Scholarship**: Thêm một học bổng mới.
 - **Export to PDF**: Xuất danh sách học bổng ra file PDF.
-- **Search Scholarship**: Tìm kiếm học bổng.
+- **Search Scholarship**: Tìm kiếm học bổng theo Scholarship Name hoặc theo Amount hoặc theo Student.
 - **Update**: Cập nhật thông tin học bổng.
 - **Delete**: Xóa một học bổng.
 - **Sort**: Sắp xếp danh sách học bổng theo Amount tăng dần.
@@ -92,7 +92,7 @@
 #### 8. Department
 - **Add Department**: Thêm một phòng ban mới.
 - **Export to PDF**: Xuất danh sách phòng ban ra file PDF.
-- **Search Department**: Tìm kiếm phòng ban.
+- **Search Department**: Tìm kiếm phòng ban theo Department Name.
 - **Update**: Cập nhật thông tin phòng ban.
 - **Delete**: Xóa một phòng ban.
 
@@ -101,7 +101,7 @@
 #### 9. Teachers
 - **Add Teacher**: Thêm một giáo viên mới.
 - **Export to PDF**: Xuất danh sách giáo viên ra file PDF.
-- **Search Teacher**: Tìm kiếm giáo viên.
+- **Search Teacher**: Tìm kiếm giáo viên theo First Name hoặc theo Last Name hoặc theo Emai hoặc theo Phone Number hoặc theo Department  .
 - **Update**: Cập nhật thông tin giáo viên.
 - **Delete**: Xóa một giáo viên.
 
@@ -109,7 +109,7 @@
 #### 10. Classes
 - **Add Classes**: Thêm một lớp học mới.
 - **Export to PDF**: Xuất danh sách lớp học ra file PDF.
-- **Search Classes**: Tìm kiếm lớp học.
+- **Search Classes**: Tìm kiếm lớp học theo Class Name hoặc theo Class Description.
 - **Update**: Cập nhật thông tin lớp học.
 - **Delete**: Xóa một lớp học.
 

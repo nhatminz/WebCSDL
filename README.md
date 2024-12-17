@@ -13,6 +13,7 @@
   Lúc này hãy ấn nút quay lại để trở lại trang đăng nhập và đăng nhập lại sẽ vào được web.
 - B3: Đăng nhập với tài khoản: nhatminh, mật khẩu 1234.
   Do kinh phí thấp + đặt máy chủ ở nước ngoài, đường truyền có thể không ổn định có thể gây giạt lag nên khi thực hiện các chức năng (ví dụ như search hay chuyển từ trang này qua trang khác) vui lòng chờ trong giây lát để có kết quả
+  ### Lưu ý: Khi đăng nhập trên 1 trình duyệt, nếu lỡ may tắt tab web đi mà lại bật ngay tab khác để truy cập link thì sẽ bị kẹt ở trang trắng, cho nên không nên tắt tab web đi, hoặc nếu lỡ tắt đi thì phải tắt trình duyệt mình đang dùng rồi mở lại rồi mới truy cập web. 
 ---
 
 ## Tính năng

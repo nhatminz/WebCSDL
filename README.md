@@ -12,7 +12,8 @@
 - B2: Chú ý trước khi đăng nhập: Khi đăng nhập,có thể bạn sẽ bị lỗi và được dẫn đến 1 trang trắng như dưới đây (có thể thôi chứ thường thì không lỗi đâu)
   ![image](https://github.com/user-attachments/assets/9f59380f-8cb6-461c-b359-ad198bae907c)
   Lúc này hãy ấn nút quay lại để trở lại trang đăng nhập và đăng nhập lại sẽ vào được web.
-- B3: Đăng nhập với tài khoản: nhatminh, mật khẩu 1234.
+- B3: Đăng nhập với <span style="font-size:35px;">**tài khoản: nhatminh, mật khẩu 1234**</span>.
+  
   Do kinh phí thấp + đặt máy chủ ở nước ngoài, đường truyền có thể không ổn định có thể gây giạt lag nên khi thực hiện các chức năng (ví dụ như search hay chuyển từ trang này qua trang khác) vui lòng chờ trong giây lát để có kết quả
   
 ---

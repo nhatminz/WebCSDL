@@ -9,7 +9,7 @@
 ## Cách truy cập
 ### Lưu ý: Khi đăng nhập trên 1 trình duyệt, nếu lỡ may tắt tab web đi mà lại bật ngay tab khác để truy cập link thì sẽ bị kẹt ở trang trắng, cho nên đã truy cập thì không tắt tab web đi, hoặc nếu lỡ tắt đi thì phải tắt trình duyệt mình đang dùng rồi mở lại rồi mới truy cập web. 
 - B1: Nhấn link [productive-spider-nhatminh-03161447.koyeb.app](https://productive-spider-nhatminh-03161447.koyeb.app/)
-- B2: Chú ý trước khi đăng nhập: Khi đăng nhập,có thể bạn sẽ được dẫn đến 1 trang trắng như dưới đây
+- B2: Chú ý trước khi đăng nhập: Khi đăng nhập,có thể bạn sẽ bị lỗi và được dẫn đến 1 trang trắng như dưới đây (có thể thôi chứ thường thì không lỗi đâu)
   ![image](https://github.com/user-attachments/assets/9f59380f-8cb6-461c-b359-ad198bae907c)
   Lúc này hãy ấn nút quay lại để trở lại trang đăng nhập và đăng nhập lại sẽ vào được web.
 - B3: Đăng nhập với tài khoản: nhatminh, mật khẩu 1234.

@@ -7,7 +7,7 @@
 ---
 
 ## Cách truy cập
-- B1: Nhấn link ![a link](productive-spider-nhatminh-03161447.koyeb.app/)
+- B1: Nhấn link [productive-spider-nhatminh-03161447.koyeb.app](https://productive-spider-nhatminh-03161447.koyeb.app/)
 - B2: Chú ý trước khi đăng nhập: Khi đăng nhập lần đầu, bạn sẽ được dẫn đến 1 trang trắng như dưới đây
   ![image](https://github.com/user-attachments/assets/9f59380f-8cb6-461c-b359-ad198bae907c)
   Lúc này hãy ấn nút quay lại để trở lại trang đăng nhập và đăng nhập lại sẽ vào được web.
